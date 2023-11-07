@@ -20,10 +20,13 @@ public class ViewFactory {
 
     public void showMainView(){
         System.out.println("show Main View");
-
         AbstractController controller = new MainViewController(cityManager, this, "MainView.fxml");
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(controller.getFxmlName()));
-        fxmlLoader.setController(controller);
+        initializeStage(controller);
+    }
+
+    public void initializeStage(AbstractController abstractController) {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(abstractController.getFxmlName()));
+        fxmlLoader.setController(abstractController);
         Parent parent;
         try {
             parent = fxmlLoader.load();
@@ -31,7 +34,6 @@ public class ViewFactory {
             e.printStackTrace();
             return;
         }
-
         Scene scene = new Scene(parent);
         Stage stage = new Stage();
         stage.setScene(scene);
