@@ -3,10 +3,12 @@ package com.test.controller;
 import com.test.CityManager;
 import com.test.model.Weather;
 import com.test.model.WeatherService;
+import com.test.model.WeatherServiceFactory;
 import com.test.view.ViewFactory;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.text.Text;
 import javafx.scene.web.WebView;
 
 public class MainViewController extends AbstractController{
@@ -19,6 +21,12 @@ public class MainViewController extends AbstractController{
 
     @FXML
     private Label errorLabel;
+
+    @FXML
+    private Text temperature;
+
+    @FXML
+    private Label temperatureLabel;
 
     private WeatherService weatherService;
 
@@ -34,6 +42,7 @@ public class MainViewController extends AbstractController{
         String cityName = "Gdańsk"; //get actual city name from text input
 
         //Invoke business logic
+        weatherService = WeatherServiceFactory.createWeatherService();
         Weather weather = weatherService.getWeather(cityName);
 
         //Display result from business logic
@@ -41,8 +50,8 @@ public class MainViewController extends AbstractController{
     }
 
     private void displayWeather(Weather weather) {
-        //temperature.setVisible(true);
-        //temperatureLabel.setVisible(true);
-        //temperature.setText("" + weather.getTempInCelsius());
+        temperature.setVisible(true);
+        temperatureLabel.setVisible(true);
+        temperature.setText("" + weather.getTempInCelsius());
     }
 }
