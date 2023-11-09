@@ -15,3 +15,6 @@ target/*
 out/*
 .idea/artifact/*
 .idea
+
+src/main/java/com/test/model/client/Config.java
+

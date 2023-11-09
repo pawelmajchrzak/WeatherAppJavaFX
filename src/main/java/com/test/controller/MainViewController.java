@@ -39,7 +39,7 @@ public class MainViewController extends AbstractController{
         System.out.println("weatherChecked !!!");
 
         //Get Data input from user
-        String cityName = "Gdańsk"; //get actual city name from text input
+        String cityName = "Kolbudy"; //get actual city name from text input
 
         //Invoke business logic
         weatherService = WeatherServiceFactory.createWeatherService();

@@ -22,5 +22,6 @@ public class App extends Application {
         ViewFactory viewFactory = new ViewFactory(new CityManager());
         viewFactory.showMainView();
 
+
     }
 }
