@@ -4,8 +4,9 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="729.0" prefWidth="956.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.test.controller.MainViewController">
+<AnchorPane prefHeight="729.0" prefWidth="956.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <Button layoutX="103.0" layoutY="628.0" mnemonicParsing="false" onAction="#checkWeatherAction" prefHeight="52.0" prefWidth="751.0" text="Sprawdź pogodę" />
       <Label layoutX="40.0" layoutY="61.0" prefHeight="17.0" prefWidth="64.0" text="Państwo:" />
@@ -17,5 +18,7 @@
       <TextField layoutX="664.0" layoutY="57.0" />
       <TextField layoutX="663.0" layoutY="110.0" />
       <Label fx:id="errorLabel" layoutX="465.0" layoutY="690.0" />
+      <Label fx:id="temperatureLabel" layoutX="40.0" layoutY="181.0" text="Temperatura:" />
+      <Text fx:id="temperature" layoutX="135.0" layoutY="194.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
    </children>
 </AnchorPane>
