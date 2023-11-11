@@ -14,16 +14,23 @@ public class ExampleWeatherClient implements WeatherClient{
     @Override
     public Weather getWeather(String cityName) {
 
+        String weatherNow = callGetMethod("weather",cityName,Config.API_KEY);
+        String weatherForecast = callGetMethod("forecast",cityName,Config.API_KEY);
 
-        String response = restTemplate.getForObject(WEATHER_URL + "weather?q={cityName}&appid={apiKey}&units=metric&lang=pl",
-                String.class, cityName, Config.API_KEY);
+//        String responseForecast = restTemplate.getForObject(WEATHER_URL + "{typeOfWeather}?q={cityName}&appid={apiKey}&units=metric&lang=pl",
+//                String.class, typeOfWeather, cityName, Config.API_KEY);
 
 
-
-
-
-        System.out.println(response);
+        System.out.println(weatherNow);
+        System.out.println(weatherForecast);
 
         return new Weather(cityName, 10, LocalDate.now());
     }
+
+    private String callGetMethod (Object...objects) {
+        return restTemplate.getForObject(WEATHER_URL + "{typeOfWeather}?q={cityName}&appid={apiKey}&units=metric&lang=pl",
+                String.class, objects);
+    }
+
+
 }
