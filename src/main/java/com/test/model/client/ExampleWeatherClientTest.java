@@ -25,12 +25,19 @@ public class ExampleWeatherClientTest implements WeatherClient{
 //        String weatherNow = callGetMethod("weather",cityName,Config.API_KEY);
 //        String weatherForecast = callGetMethod("forecast",cityName,Config.API_KEY);
 
+        String descriptionWeather = null;
+        String iconWeatherCode = null;
+        double feelsLikeTemperature = 0;
+        String time = null;
 
         // Pobierz aktualny czas
         LocalDateTime currentTime = LocalDateTime.now();
         //System.out.println(currentTime);
 
         // Formatuj datę do postaci, która jest akceptowana przez OpenWeatherMap (RRRR-MM-DD HH:MM:SS)
+        DateTimeFormatter timeFormat = DateTimeFormatter.ofPattern("HH:mm");
+        time = currentTime.format(timeFormat);
+
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         String formattedDateTime = currentTime.format(formatter);
         currentTime = currentTime.plusDays(1);
@@ -47,19 +54,18 @@ public class ExampleWeatherClientTest implements WeatherClient{
         try {
             JsonNode jsonNode = objectMapper.readTree(weatherNow.getBody());
 
-            // Pobierz pole "weather" -> "description"
-            String weatherDescription = jsonNode.get("weather").get(0).get("description").asText();
-
-            // Pobierz temperaturę z pola "main" -> "temp"
+            // Pobierz pola z api
+            descriptionWeather = jsonNode.get("weather").get(0).get("description").asText();
+            iconWeatherCode = jsonNode.get("weather").get(0).get("icon").asText();
             temperatureCelsius = jsonNode.get("main").get("temp").asDouble();
+            feelsLikeTemperature = jsonNode.get("main").get("feels_like").asDouble();
 
-            // Pobierz temperaturę odczuwalną z pola "main" -> "feels_like" (jeśli dostępna)
-            JsonNode feelsLikeNode = jsonNode.get("main").get("feels_like");
-            double feelsLikeTemperature = feelsLikeNode != null ? feelsLikeNode.asDouble() : Double.NaN;
 
-            System.out.println("Opis pogody teraz w " + cityName + ": " + weatherDescription);
+            System.out.println("Opis pogody teraz w " + cityName + ": " + descriptionWeather);
             System.out.println("Temperatura teraz w " + cityName + ": " + temperatureCelsius + " stopni Celsiusza");
             System.out.println("Temperatura odczuwalna w " + cityName + ": " + feelsLikeTemperature + " stopni Celsiusza");
+            System.out.println("Kod obrazka: " + iconWeatherCode);
+            System.out.println("Temperature pobrano o: " + time);
 
             // mainNode = jsonNode.get("main");
             //temperatureCelsius = mainNode.get("temp").asDouble();
@@ -110,7 +116,9 @@ public class ExampleWeatherClientTest implements WeatherClient{
         //System.out.println(temperatureCelsius);
         //System.out.println(weatherForecast);
 
-        return new Weather(cityName, temperatureCelsius, LocalDate.now());
+        //return new Weather(cityName, temperatureCelsius, LocalDate.now(), time);
+        return new Weather(cityName, temperatureCelsius, LocalDate.now(), time,
+                iconWeatherCode, descriptionWeather, feelsLikeTemperature);
     }
 
     private ResponseEntity<String> callGetMethod (Object...objects) {

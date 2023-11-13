@@ -20,6 +20,11 @@ public class ExampleWeatherClient implements WeatherClient{
     @Override
     public Weather getWeather(String cityName) {
 
+        String descriptionWeather = null;
+        String iconWeatherCode = null;
+        double feelsLikeTemperature = 0;
+        String time = null;
+
 //        String weatherNow = callGetMethod("weather",cityName,Config.API_KEY);
 //        String weatherForecast = callGetMethod("forecast",cityName,Config.API_KEY);
 
@@ -36,7 +41,7 @@ public class ExampleWeatherClient implements WeatherClient{
 
             // Pobierz temperaturę odczuwalną z pola "main" -> "feels_like" (jeśli dostępna)
             JsonNode feelsLikeNode = jsonNode.get("main").get("feels_like");
-            double feelsLikeTemperature = feelsLikeNode != null ? feelsLikeNode.asDouble() : Double.NaN;
+            feelsLikeTemperature = feelsLikeNode != null ? feelsLikeNode.asDouble() : Double.NaN;
 
             System.out.println("Opis pogody teraz w " + cityName + ": " + weatherDescription);
             System.out.println("Temperatura teraz w " + cityName + ": " + temperatureCelsius + " stopni Celsiusza");
@@ -65,7 +70,8 @@ public class ExampleWeatherClient implements WeatherClient{
         //System.out.println(temperatureCelsius);
         //System.out.println(weatherForecast);
 
-        return new Weather(cityName, temperatureCelsius, LocalDate.now());
+        return new Weather(cityName, temperatureCelsius, LocalDate.now(), time,
+                iconWeatherCode, descriptionWeather, feelsLikeTemperature);
     }
 
     private ResponseEntity<String> callGetMethod (Object...objects) {
