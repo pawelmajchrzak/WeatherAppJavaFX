@@ -1,11 +1,14 @@
 package com.test.model.client;
 
+import com.test.model.Forecast;
 import com.test.model.Weather;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.List;
+
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -72,6 +75,11 @@ public class ExampleWeatherClient implements WeatherClient{
 
         return new Weather(cityName, temperatureCelsius, LocalDate.now(), time,
                 iconWeatherCode, descriptionWeather, feelsLikeTemperature);
+    }
+
+    @Override
+    public List<Forecast> getForecast(String cityName) {
+        return null;
     }
 
     private ResponseEntity<String> callGetMethod (Object...objects) {

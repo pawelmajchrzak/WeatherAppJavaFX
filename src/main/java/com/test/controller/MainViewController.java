@@ -1,6 +1,7 @@
 package com.test.controller;
 
 import com.test.CityManager;
+import com.test.model.Forecast;
 import com.test.model.Weather;
 import com.test.model.WeatherService;
 import com.test.model.WeatherServiceFactory;
@@ -12,10 +13,9 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
 
-public class MainViewController extends AbstractController{
+import java.util.List;
 
-    @FXML
-    private Text NextFourthDayDDandMM;
+public class MainViewController extends AbstractController{
 
     @FXML
     private Text NextSecondDayDDandMM;
@@ -27,12 +27,6 @@ public class MainViewController extends AbstractController{
     private Text NowTimeHourAndMinutes;
 
     @FXML
-    private Text TodayDDAndMM;
-
-    @FXML
-    private Text TomorrowDDAndMM;
-
-    @FXML
     private TextField cityField;
 
     @FXML
@@ -42,13 +36,40 @@ public class MainViewController extends AbstractController{
     private Label errorLabel;
 
     @FXML
-    private ImageView weatherNextFourthDay15ClockImage;
+    private Text forecastDayAndHour0;
 
     @FXML
-    private Text weatherNextFourthDay15ClockTemperature;
+    private Text forecastDayAndHour1;
 
     @FXML
-    private Text weatherNextFourthDay3ClockTemperature;
+    private Text forecastDayAndHour2;
+
+    @FXML
+    private ImageView forecastImage0;
+
+    @FXML
+    private ImageView forecastImage1;
+
+    @FXML
+    private ImageView forecastImage2;
+
+    @FXML
+    private Text forecastRain0;
+
+    @FXML
+    private Text forecastRain1;
+
+    @FXML
+    private Text forecastRain2;
+
+    @FXML
+    private Text forecastTemperature0;
+
+    @FXML
+    private Text forecastTemperature1;
+
+    @FXML
+    private Text forecastTemperature2;
 
     @FXML
     private ImageView weatherNextSecondDay15ClockImage;
@@ -80,78 +101,6 @@ public class MainViewController extends AbstractController{
     @FXML
     private Text weatherNowTemperature;
 
-    @FXML
-    private ImageView weatherToday15ClockImage;
-
-    @FXML
-    private Text weatherToday15ClockPOP;
-
-    @FXML
-    private Text weatherToday15ClockTemperature;
-
-    @FXML
-    private ImageView weatherToday21ClockImage;
-
-    @FXML
-    private Text weatherToday21ClockPOP;
-
-    @FXML
-    private Text weatherToday21ClockTemperature;
-
-    @FXML
-    private ImageView weatherToday3ClockImage;
-
-    @FXML
-    private Text weatherToday3ClockPOP;
-
-    @FXML
-    private Text weatherToday3ClockTemperature;
-
-    @FXML
-    private ImageView weatherToday9ClockImage;
-
-    @FXML
-    private Text weatherToday9ClockPOP;
-
-    @FXML
-    private Text weatherToday9ClockTemperature;
-
-    @FXML
-    private ImageView weatherTomorrow15ClockImage;
-
-    @FXML
-    private Text weatherTomorrow15ClockPOP;
-
-    @FXML
-    private Text weatherTomorrow15ClockTemperature;
-
-    @FXML
-    private ImageView weatherTomorrow21ClockImage;
-
-    @FXML
-    private Text weatherTomorrow21ClockPOP;
-
-    @FXML
-    private Text weatherTomorrow21ClockTemperature;
-
-    @FXML
-    private ImageView weatherTomorrow3ClockImage;
-
-    @FXML
-    private Text weatherTomorrow3ClockPOP;
-
-    @FXML
-    private Text weatherTomorrow3ClockTemperature;
-
-    @FXML
-    private ImageView weatherTomorrow9ClockImage;
-
-    @FXML
-    private Text weatherTomorrow9ClockPOP;
-
-    @FXML
-    private Text weatherTomorrow9ClockTemperature;
-
 
     private WeatherService weatherService;
 
@@ -169,9 +118,21 @@ public class MainViewController extends AbstractController{
         //Invoke business logic
         weatherService = WeatherServiceFactory.createWeatherService();
         Weather weather = weatherService.getWeather(cityName);
+        List<Forecast> forecast = weatherService.getForecast(cityName);
 
         //Display result from business logic
         displayWeather(weather);
+        displayForecast(forecast);
+    }
+
+    private void displayForecast(List<Forecast> forecast) {
+        Forecast thirdForecast = forecast.get(2);
+        forecastDayAndHour0.setText("" + thirdForecast.getDateTime());
+        Image image = new Image("https://openweathermap.org/img/wn/" + thirdForecast.getIconWeatherCode()+"@2x.png");
+        forecastImage0.setImage(image);
+        forecastTemperature0.setText("" + thirdForecast.getTemperature() + "st.C");
+        forecastRain0.setText("" + thirdForecast.getProbabilityRain()*100 + "%");
+
     }
 
     private void displayWeather(Weather weather) {
