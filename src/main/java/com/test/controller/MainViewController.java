@@ -13,6 +13,8 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class MainViewController extends AbstractController{
@@ -101,7 +103,10 @@ public class MainViewController extends AbstractController{
     @FXML
     private Text weatherNowTemperature;
 
-
+//    List<Text> forecastDayAndHourTexts = Arrays.asList(forecastDayAndHour0, forecastDayAndHour1, forecastDayAndHour2);
+//    List<ImageView> forecastImageViews = Arrays.asList(forecastImage0, forecastImage1, forecastImage2);
+//    List<Text> forecastTemperatureTexts = Arrays.asList(forecastTemperature0, forecastTemperature1, forecastTemperature2);
+//    List<Text> forecastRainTexts = Arrays.asList(forecastRain0, forecastRain1, forecastRain2);
     private WeatherService weatherService;
 
     public MainViewController(CityManager cityManager, ViewFactory viewFactory, String fxmlName) {
@@ -125,14 +130,57 @@ public class MainViewController extends AbstractController{
         displayForecast(forecast);
     }
 
-    private void displayForecast(List<Forecast> forecast) {
-        Forecast thirdForecast = forecast.get(2);
-        forecastDayAndHour0.setText("" + thirdForecast.getDateTime());
-        Image image = new Image("https://openweathermap.org/img/wn/" + thirdForecast.getIconWeatherCode()+"@2x.png");
-        forecastImage0.setImage(image);
-        forecastTemperature0.setText("" + thirdForecast.getTemperature() + "st.C");
-        forecastRain0.setText("" + thirdForecast.getProbabilityRain()*100 + "%");
 
+    private void displayForecast(List<Forecast> forecast) {
+//        Forecast firstForecast = forecast.get(0);
+//        forecastDayAndHour0.setText("" + firstForecast.getDateTime());
+//        Image image = new Image("https://openweathermap.org/img/wn/" + firstForecast.getIconWeatherCode()+"@2x.png");
+//        forecastImage0.setImage(image);
+//        forecastTemperature0.setText("" + firstForecast.getTemperature() + "st.C");
+//        forecastRain0.setText("" + firstForecast.getProbabilityRain()*100 + "%");
+//        Forecast secondForecast = forecast.get(1);
+//        forecastDayAndHour1.setText("" + secondForecast.getDateTime());
+//        Image image1 = new Image("https://openweathermap.org/img/wn/" + secondForecast.getIconWeatherCode()+"@2x.png");
+//        forecastImage1.setImage(image);
+//        forecastTemperature1.setText("" + secondForecast.getTemperature() + "st.C");
+//        forecastRain1.setText("" + secondForecast.getProbabilityRain()*100 + "%");
+//        Forecast thirdForecast = forecast.get(2);
+//        forecastDayAndHour2.setText("" + thirdForecast.getDateTime());
+//        Image image2 = new Image("https://openweathermap.org/img/wn/" + thirdForecast.getIconWeatherCode()+"@2x.png");
+//        forecastImage2.setImage(image);
+//        forecastTemperature2.setText("" + thirdForecast.getTemperature() + "st.C");
+//        forecastRain2.setText("" + thirdForecast.getProbabilityRain()*100 + "%");
+//
+//        for (int i = 0; i<3; i++) {
+//            Forecast eachForecast = forecast.get(i);
+//            forecastDayAndHour{i}.setText("" + firstForecast.getDateTime());
+//            Image image = new Image("https://openweathermap.org/img/wn/" + firstForecast.getIconWeatherCode()+"@2x.png");
+//            forecastImage{i}.setImage(image);
+//            forecastTemperature{i}.setText("" + firstForecast.getTemperature() + "st.C");
+//            forecastRain{i}.setText("" + firstForecast.getProbabilityRain()*100 + "%");
+//        }
+
+        List<Text> dayAndHourLabels = List.of(forecastDayAndHour0, forecastDayAndHour1, forecastDayAndHour2);
+        List<ImageView> imageViews = List.of(forecastImage0, forecastImage1, forecastImage2);
+        List<Text> temperatureLabels = List.of(forecastTemperature0, forecastTemperature1, forecastTemperature2);
+        List<Text> rainLabels = List.of(forecastRain0, forecastRain1, forecastRain2);
+
+        for (int i = 0; i < 3; i++) {
+            Forecast currentForecast = forecast.get(i);
+
+            // Uzyskaj dostęp do odpowiednich komponentów graficznych
+            Text dayAndHourLabel = dayAndHourLabels.get(i);
+            ImageView imageView = imageViews.get(i);
+            Text temperatureLabel = temperatureLabels.get(i);
+            Text rainLabel = rainLabels.get(i);
+
+            // Ustaw wartości komponentów graficznych
+            dayAndHourLabel.setText(currentForecast.getDateTime());
+            Image weatherImage = new Image("https://openweathermap.org/img/wn/" + currentForecast.getIconWeatherCode() + "@2x.png");
+            imageView.setImage(weatherImage);
+            temperatureLabel.setText(currentForecast.getTemperature() + "st.C");
+            rainLabel.setText(currentForecast.getProbabilityRain() * 100 + "%");
+        }
     }
 
     private void displayWeather(Weather weather) {
