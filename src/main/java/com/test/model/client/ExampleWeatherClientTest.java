@@ -80,15 +80,11 @@ public class ExampleWeatherClientTest implements WeatherClient{
             JsonNode jsonNode = objectMapperForecast.readTree(weatherForecast.getBody());
             for (int i =0; i<8; i++) {
                 JsonNode forecastNode = jsonNode.get("list").get(i);
-                temperature = forecastNode.get("main").get("temp").asDouble();
+                temperature = Math.round(forecastNode.get("main").get("temp").asDouble());
                 iconWeatherCode = forecastNode.get("weather").get(0).get("icon").asText();
-                probabilityRain = forecastNode.get("pop").asDouble();
+                probabilityRain = Math.round(forecastNode.get("pop").asDouble()*100);
                 forecastDateTime = forecastNode.get("dt_txt").asText();
                 forecastList.add(new Forecast(cityName, temperature, forecastDateTime, iconWeatherCode, probabilityRain));
-                System.out.println("Temperatura: " + temperature + " stopni Celsiusza");
-                System.out.println("Prawdopodobieństwo deszczu: " + probabilityRain);
-                System.out.println("Wybieram ikonkę: " + iconWeatherCode);
-                System.out.println("Czas: " + forecastDateTime);
             }
 
 
@@ -118,10 +114,7 @@ public class ExampleWeatherClientTest implements WeatherClient{
 
                     // Wypisz dane prognozy
                     //System.out.println("Prognoza na " + forecastDateTime + ":");
-                    System.out.println("Temperatura: " + temperature + " stopni Celsiusza");
-                    System.out.println("Prawdopodobieństwo deszczu: " + probabilityRain);
-                    System.out.println("Wybieram ikonkę: " + iconWeatherCode);
-                    System.out.println("Czas: " + forecastDateTime);
+
 //                }
                 //System.out.println("tak");
 //            }
