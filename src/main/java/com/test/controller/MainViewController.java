@@ -7,19 +7,12 @@ import com.test.model.WeatherService;
 import com.test.model.WeatherServiceFactory;
 import com.test.view.ViewFactory;
 import javafx.fxml.FXML;
-import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
-
-import java.time.DayOfWeek;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Locale;
+
 
 public class MainViewController extends AbstractController{
 
