@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
 import java.io.IOException;
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -91,6 +92,13 @@ public class ExampleWeatherClientTest implements WeatherClient{
             for (JsonNode forecastNode : jsonNode.get("list")) {
                 forecastDateTime = forecastNode.get("dt_txt").asText();
 
+
+                DateTimeFormatter formatterFromApi = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+                LocalDateTime dateTime = LocalDateTime.parse(forecastDateTime,formatterFromApi);
+                DayOfWeek dayOfWeekName = dateTime.getDayOfWeek();
+                String polishDayOfWeekName = PolishDayOfWeekConverter.convertToPolish(dayOfWeekName);
+
+
                 if ((
                         forecastDateTime.contains(formattedDateTimeNextFirstDay)||
                         forecastDateTime.contains(formattedDateTimeNextSecondDay)||
@@ -103,7 +111,7 @@ public class ExampleWeatherClientTest implements WeatherClient{
                     iconWeatherCode = forecastNode.get("weather").get(0).get("icon").asText();
                     probabilityRain = Math.round(forecastNode.get("pop").asDouble()*100);
 
-                    forecastList.add(new Forecast(cityName, temperature, forecastDateTime, iconWeatherCode, probabilityRain));
+                    forecastList.add(new Forecast(cityName, temperature, polishDayOfWeekName, iconWeatherCode, probabilityRain));
                 }
             }
         } catch (IOException e) {
