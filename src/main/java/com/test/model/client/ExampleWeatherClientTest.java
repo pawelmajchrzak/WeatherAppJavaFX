@@ -58,16 +58,17 @@ public class ExampleWeatherClientTest implements WeatherClient{
         // Pobierz aktualny czas
         LocalDateTime currentTime = LocalDateTime.now();
 
-//        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-//        String formattedDateTime = currentTime.format(formatter);
-//        currentTime = currentTime.plusDays(1);
-//        String formattedDateTimeNextFirstDay = currentTime.format(formatter);
-//        currentTime = currentTime.plusDays(1);
-//        String formattedDateTimeNextSecondDay = currentTime.format(formatter);
-//        currentTime = currentTime.plusDays(1);
-//        String formattedDateTimeNextThirdDay = currentTime.format(formatter);
-//        currentTime = currentTime.plusDays(1);
-//        String formattedDateTimeNextFourthDay = currentTime.format(formatter);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
+        String formattedDateTime = currentTime.format(formatter);
+        currentTime = currentTime.plusDays(1);
+        String formattedDateTimeNextFirstDay = currentTime.format(formatter);
+        currentTime = currentTime.plusDays(1);
+        String formattedDateTimeNextSecondDay = currentTime.format(formatter);
+        currentTime = currentTime.plusDays(1);
+        String formattedDateTimeNextThirdDay = currentTime.format(formatter);
+        currentTime = currentTime.plusDays(1);
+        String formattedDateTimeNextFourthDay = currentTime.format(formatter);
 
         ResponseEntity<String> weatherForecast = callGetMethod("forecast",cityName,Config.API_KEY);
         ObjectMapper objectMapperForecast = new ObjectMapper();
@@ -83,41 +84,28 @@ public class ExampleWeatherClientTest implements WeatherClient{
                 temperature = Math.round(forecastNode.get("main").get("temp").asDouble());
                 iconWeatherCode = forecastNode.get("weather").get(0).get("icon").asText();
                 probabilityRain = Math.round(forecastNode.get("pop").asDouble()*100);
-                forecastDateTime = forecastNode.get("dt_txt").asText();
+                forecastDateTime = formatWithTodayYesterdayHourAndMinutes(forecastNode.get("dt_txt").asText());
                 forecastList.add(new Forecast(cityName, temperature, forecastDateTime, iconWeatherCode, probabilityRain));
             }
 
+            for (JsonNode forecastNode : jsonNode.get("list")) {
+                forecastDateTime = forecastNode.get("dt_txt").asText();
 
+                if ((
+                        forecastDateTime.contains(formattedDateTimeNextFirstDay)||
+                        forecastDateTime.contains(formattedDateTimeNextSecondDay)||
+                        forecastDateTime.contains(formattedDateTimeNextThirdDay)||
+                        forecastDateTime.contains(formattedDateTimeNextFourthDay))
+                        &&
+                        (forecastDateTime.contains("03:00:00") || forecastDateTime.contains("15:00:00"))) {
 
+                    temperature = Math.round(forecastNode.get("main").get("temp").asDouble());
+                    iconWeatherCode = forecastNode.get("weather").get(0).get("icon").asText();
+                    probabilityRain = Math.round(forecastNode.get("pop").asDouble()*100);
 
-//            for (JsonNode forecastNode : jsonNode.get("list")) {
-//                String forecastDateTime = forecastNode.get("dt_txt").asText();
-//                System.out.println(forecastDateTime);
-                //System.out.println(formattedDateTime);
-                // Sprawdź, czy prognoza jest dla właściwego dnia i godziny
-//                if ((forecastDateTime.contains(formattedDateTime)||
-//                        forecastDateTime.contains(formattedDateTimeNextFirstDay)||
-//                        forecastDateTime.contains(formattedDateTimeNextSecondDay)||
-//                        forecastDateTime.contains(formattedDateTimeNextThirdDay)||
-//                        forecastDateTime.contains(formattedDateTimeNextFourthDay))
-//                        &&
-//                        (forecastDateTime.contains("03:00:00") ||
-//                                forecastDateTime.contains("09:00:00") ||
-//                                forecastDateTime.contains("15:00:00") ||
-//                                forecastDateTime.contains("21:00:00"))) {
-
-                    // Pobierz temperaturę z prognozy
-                    //double temperatureCelsius = forecastNode.get("main").get("temp").asDouble();
-
-                    // Pobierz opis pogody
-                    //String weatherDescription = forecastNode.get("weather").get(0).get("description").asText();
-
-                    // Wypisz dane prognozy
-                    //System.out.println("Prognoza na " + forecastDateTime + ":");
-
-//                }
-                //System.out.println("tak");
-//            }
+                    forecastList.add(new Forecast(cityName, temperature, forecastDateTime, iconWeatherCode, probabilityRain));
+                }
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -129,6 +117,20 @@ public class ExampleWeatherClientTest implements WeatherClient{
     private ResponseEntity<String> callGetMethod (Object...objects) {
         return restTemplate.getForEntity(WEATHER_URL + "{typeOfWeather}?q={cityName}&appid={apiKey}&units=metric&lang=pl",
                 String.class, objects);
+    }
+
+    public static String formatWithTodayYesterdayHourAndMinutes(String dateTime) {
+        String todayYesterday = "Jutro ";
+        String hourAndMinutes = dateTime.substring(11,16);
+        LocalDateTime currentTime = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        String formattedDateTime = currentTime.format(formatter);
+
+        if (dateTime.contains(formattedDateTime)) {
+            todayYesterday = "Dziś ";
+        }
+
+        return todayYesterday + hourAndMinutes;
     }
 
 

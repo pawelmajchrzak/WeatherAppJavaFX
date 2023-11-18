@@ -13,17 +13,27 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
 
+import java.time.DayOfWeek;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 
 public class MainViewController extends AbstractController{
 
     @FXML
-    private Text NextSecondDayDDandMM;
+    private Text DayOfWeek10;
 
     @FXML
-    private Text NextThirdDayDDandMM;
+    private Text DayOfWeek12;
+
+    @FXML
+    private Text DayOfWeek14;
+
+    @FXML
+    private Text DayOfWeek8;
 
     @FXML
     private Text NowTimeHourAndMinutes;
@@ -68,6 +78,15 @@ public class MainViewController extends AbstractController{
     private ImageView forecastImage1;
 
     @FXML
+    private ImageView forecastImage11;
+
+    @FXML
+    private ImageView forecastImage13;
+
+    @FXML
+    private ImageView forecastImage15;
+
+    @FXML
     private ImageView forecastImage2;
 
     @FXML
@@ -84,6 +103,9 @@ public class MainViewController extends AbstractController{
 
     @FXML
     private ImageView forecastImage7;
+
+    @FXML
+    private ImageView forecastImage9;
 
     @FXML
     private Text forecastRain0;
@@ -116,6 +138,24 @@ public class MainViewController extends AbstractController{
     private Text forecastTemperature1;
 
     @FXML
+    private Text forecastTemperature10;
+
+    @FXML
+    private Text forecastTemperature11;
+
+    @FXML
+    private Text forecastTemperature12;
+
+    @FXML
+    private Text forecastTemperature13;
+
+    @FXML
+    private Text forecastTemperature14;
+
+    @FXML
+    private Text forecastTemperature15;
+
+    @FXML
     private Text forecastTemperature2;
 
     @FXML
@@ -134,22 +174,10 @@ public class MainViewController extends AbstractController{
     private Text forecastTemperature7;
 
     @FXML
-    private ImageView weatherNextSecondDay15ClockImage;
+    private Text forecastTemperature8;
 
     @FXML
-    private Text weatherNextSecondDay15ClockTemperature;
-
-    @FXML
-    private Text weatherNextSecondDay3ClockTemperature;
-
-    @FXML
-    private ImageView weatherNextThirdDay15ClockImage;
-
-    @FXML
-    private Text weatherNextThirdDay15ClockTemperature;
-
-    @FXML
-    private Text weatherNextThirdDay3ClockTemperature;
+    private Text forecastTemperature9;
 
     @FXML
     private Text weatherNowDescription;
@@ -193,6 +221,20 @@ public class MainViewController extends AbstractController{
         List<Text> temperatureLabels = List.of(forecastTemperature0, forecastTemperature1, forecastTemperature2, forecastTemperature3, forecastTemperature4, forecastTemperature5, forecastTemperature6, forecastTemperature7);
         List<Text> rainLabels = List.of(forecastRain0, forecastRain1, forecastRain2, forecastRain3, forecastRain4, forecastRain5, forecastRain6, forecastRain7);
 
+        List<Text> dayOfWeekLabels = List.of(DayOfWeek8, DayOfWeek10, DayOfWeek12, DayOfWeek14);
+        List<Text> dayTemperatureLabels = List.of(forecastTemperature9, forecastTemperature11, forecastTemperature13, forecastTemperature15);
+        List<Text> nightTemperatureLabels = List.of(forecastTemperature8, forecastTemperature10, forecastTemperature12, forecastTemperature14);
+        List<ImageView> dayImageViews = List.of(forecastImage9, forecastImage11, forecastImage13, forecastImage15);
+        System.out.println(dayTemperatureLabels.get(0));
+        System.out.println(dayTemperatureLabels.get(1));
+        System.out.println(dayTemperatureLabels.get(2));
+        System.out.println(dayTemperatureLabels.get(3));
+
+        System.out.println(nightTemperatureLabels.get(0));
+        System.out.println(nightTemperatureLabels.get(1));
+        System.out.println(nightTemperatureLabels.get(2));
+        System.out.println(nightTemperatureLabels.get(3));
+
         for (int i = 0; i < 8; i++) {
             Forecast currentForecast = forecast.get(i);
 
@@ -209,6 +251,29 @@ public class MainViewController extends AbstractController{
             temperatureLabel.setText(String.format("%.0f", currentForecast.getTemperature()) + " °C");
             rainLabel.setText("Opady: " + String.format("%.0f", currentForecast.getProbabilityRain()) + " %");
         }
+        int k=0;
+        for (int i = 8; i < 16; i+=2) {
+            Forecast currentForecast = forecast.get(i);
+            DateTimeFormatter formatterFromApi = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+            LocalDateTime dateTime = LocalDateTime.parse(currentForecast.getDateTime(),formatterFromApi);
+            DayOfWeek dayOfWeekName = dateTime.getDayOfWeek();
+
+            // Uzyskaj dostęp do odpowiednich komponentów graficznych
+            Text dayOfWeek = dayOfWeekLabels.get(k); //tu powinno być od 0 do 3
+            ImageView dayImageView = dayImageViews.get(k);
+            Text dayTemperature = dayTemperatureLabels.get(k);
+            Text nightTemperature = nightTemperatureLabels.get(k);
+
+            dayOfWeek.setText(""+dayOfWeekName);
+            nightTemperature.setText(String.format("%.0f", currentForecast.getTemperature()) + " °C");
+            currentForecast = forecast.get(i+1);
+            Image weatherImage = new Image("https://openweathermap.org/img/wn/" + currentForecast.getIconWeatherCode() + "@2x.png");
+            dayImageView.setImage(weatherImage);
+            dayTemperature.setText(String.format("%.0f", currentForecast.getTemperature()) + " °C");
+            k++;
+        }
+
+
     }
 
     private void displayWeather(Weather weather) {
