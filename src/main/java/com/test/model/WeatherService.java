@@ -14,6 +14,9 @@ public class WeatherService {
     public Weather getWeather(String cityName) {
         return weatherClient.getWeather(cityName);
     }
+    public boolean isCityValid(String cityName) {
+        return weatherClient.isCityValid(cityName);
+    }
 
     public List<Forecast> getForecast(String cityName) {
         return weatherClient.getForecast(cityName);

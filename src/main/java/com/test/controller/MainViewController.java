@@ -21,6 +21,13 @@ public class MainViewController extends AbstractController{
     @FXML
     private Label errorLabel;
 
+
+    @FXML
+    private Label errorCityLabel;
+
+    @FXML
+    private Label errorCountryLabel;
+
     @FXML
     private Text DayOfWeek10;
 
@@ -221,20 +228,28 @@ public class MainViewController extends AbstractController{
     @FXML
     void checkWeatherAction() {
         System.out.println("weatherChecked !!!");
+        if (fieldsAreValid()) {
 
-        //Get Data input from user
-        String cityName; //get actual city name from text input
-        //if(fieldsAreValid()) {
-            cityName = cityField.getText();
-        //}
-        //Invoke business logic
-        weatherService = WeatherServiceFactory.createWeatherService();
-        Weather weather = weatherService.getWeather(cityName);
-        List<Forecast> forecast = weatherService.getForecast(cityName);
+            //Get Data input from user
+            String cityName= cityField.getText();
+            
+            //if(fieldsAreValid()) {
 
-        //Display result from business logic
-        displayWeather(weather);
-        displayForecast(forecast);
+            //}
+            //Invoke business logic
+            weatherService = WeatherServiceFactory.createWeatherService();
+            if (weatherService.isCityValid(cityName)) {
+                errorCityLabel.setText("");
+                Weather weather = weatherService.getWeather(cityName);
+                List<Forecast> forecast = weatherService.getForecast(cityName);
+
+                //Display result from business logic
+                displayWeather(weather);
+                displayForecast(forecast);
+            } else {
+                errorCityLabel.setText("W bazie danych nie ma takiego miasta!");
+            }
+        }
     }
 
     private String getCityName() {
@@ -246,15 +261,17 @@ public class MainViewController extends AbstractController{
     }
 
     private boolean fieldsAreValid() {
-        if(countryField.getText().isEmpty()) {
-            errorLabel.setText("Proszę wpisać państwo!");
-            return  false;
-        }
+//        if(countryField.getText().isEmpty()) {
+//            errorCountryLabel.setText("Proszę wpisać państwo!");
+//            return  false;
+//        }
         if(cityField.getText().isEmpty()) {
-            errorLabel.setText("Proszę wpisać miasto!");
+            errorCityLabel.setText("Proszę wpisać miasto!");
             return  false;
         }
+        errorCityLabel.setText("");
         return  true;
+
     }
 
 

@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.test.model.Forecast;
 import com.test.model.Weather;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
@@ -91,6 +92,21 @@ public class OpenWeatherMapClient implements WeatherClient{
             e.printStackTrace();
         }
         return forecastList;
+    }
+
+    @Override
+    public boolean isCityValid(String cityName) {
+        try {
+            // Wywołaj metodę zapytania o pogodę dla danej nazwy miasta
+            ResponseEntity<String> response = callGetMethod("weather", cityName, Config.API_KEY);
+
+            // Sprawdź, czy odpowiedź jest poprawna
+            return response.getStatusCode() == HttpStatus.OK;
+        } catch (Exception e) {
+            // Obsłuż ewentualne błędy
+            e.printStackTrace();
+            return false;
+        }
     }
 
     private String dayOfWeekFromDateTime(String forecastDateTime) {

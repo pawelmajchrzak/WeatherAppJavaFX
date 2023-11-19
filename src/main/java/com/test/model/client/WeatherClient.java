@@ -9,4 +9,6 @@ public interface WeatherClient {
     Weather getWeather(String cityName);
 
     List<Forecast> getForecast(String cityName);
+
+    boolean isCityValid(String cityName);
 }
