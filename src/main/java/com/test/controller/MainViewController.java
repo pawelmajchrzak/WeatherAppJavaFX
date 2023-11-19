@@ -7,6 +7,7 @@ import com.test.model.WeatherService;
 import com.test.model.WeatherServiceFactory;
 import com.test.view.ViewFactory;
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -15,6 +16,10 @@ import java.util.List;
 
 
 public class MainViewController extends AbstractController{
+
+
+    @FXML
+    private Label errorLabel;
 
     @FXML
     private Text DayOfWeek10;
@@ -218,8 +223,10 @@ public class MainViewController extends AbstractController{
         System.out.println("weatherChecked !!!");
 
         //Get Data input from user
-        String cityName = "Gdańsk"; //get actual city name from text input
-
+        String cityName; //get actual city name from text input
+        //if(fieldsAreValid()) {
+            cityName = cityField.getText();
+        //}
         //Invoke business logic
         weatherService = WeatherServiceFactory.createWeatherService();
         Weather weather = weatherService.getWeather(cityName);
@@ -228,6 +235,26 @@ public class MainViewController extends AbstractController{
         //Display result from business logic
         displayWeather(weather);
         displayForecast(forecast);
+    }
+
+    private String getCityName() {
+        if(fieldsAreValid()) {
+            return cityField.getText();
+        } else {
+            return "";
+        }
+    }
+
+    private boolean fieldsAreValid() {
+        if(countryField.getText().isEmpty()) {
+            errorLabel.setText("Proszę wpisać państwo!");
+            return  false;
+        }
+        if(cityField.getText().isEmpty()) {
+            errorLabel.setText("Proszę wpisać miasto!");
+            return  false;
+        }
+        return  true;
     }
 
 
@@ -267,7 +294,7 @@ public class MainViewController extends AbstractController{
 
     private void displayWeather(Weather weather) {
         weatherNowTemperature.setText("" + String.format("%.0f", weather.getCurrentTemperature()) + " °C");
-        NowTimeHourAndMinutes.setText("Teraz " + weather.getTime());
+        NowTimeHourAndMinutes.setText(weather.getCityName() + ", teraz " + weather.getTime());
         weatherNowDescription.setText("" + weather.getDescriptionWeather());
         weatherNowFeelsLike.setText("Temperatura odczuwalna " + String.format("%.0f", weather.getFeelsLikeTemperature()) + " °C");
         Image image = new Image("https://openweathermap.org/img/wn/" + weather.getIconWeatherCode()+"@2x.png");

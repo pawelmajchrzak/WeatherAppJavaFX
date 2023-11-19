@@ -45,7 +45,7 @@ public class OpenWeatherMapClient implements WeatherClient{
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return new Weather(temperature, hourAndMinutes, iconWeatherCode, descriptionWeather, feelsLikeTemperature);
+        return new Weather(temperature, hourAndMinutes, iconWeatherCode, descriptionWeather, feelsLikeTemperature,cityName);
     }
 
     @Override
@@ -126,5 +126,5 @@ public class OpenWeatherMapClient implements WeatherClient{
         }
         return false;
     }
-    
+
 }

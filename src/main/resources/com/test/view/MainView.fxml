@@ -162,5 +162,6 @@
          </children>
       </VBox>
       <Text layoutX="200.0" layoutY="674.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Prognoza dniowa" />
+      <Label fx:id="errorLabel" layoutX="486.0" layoutY="798.0" />
    </children>
 </AnchorPane>
