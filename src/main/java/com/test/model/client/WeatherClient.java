@@ -6,9 +6,9 @@ import com.test.model.Weather;
 import java.util.List;
 
 public interface WeatherClient {
-    Weather getWeather(String cityName);
+    Weather getWeather(String cityName, String countryName);
 
-    List<Forecast> getForecast(String cityName);
+    List<Forecast> getForecast(String cityName, String countryName);
 
-    boolean isCityValid(String cityName);
+    boolean isCityAndCountryValid(String cityName, String countryName);
 }

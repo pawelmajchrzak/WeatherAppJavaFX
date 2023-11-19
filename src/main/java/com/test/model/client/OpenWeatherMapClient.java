@@ -14,6 +14,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class OpenWeatherMapClient implements WeatherClient{
 
@@ -29,13 +30,13 @@ public class OpenWeatherMapClient implements WeatherClient{
 
 
     @Override
-    public Weather getWeather(String cityName) {
-
+    public Weather getWeather(String cityName, String countryName) {
+        String countryCode = getCountryCode(countryName);
         LocalDateTime currentTime = LocalDateTime.now();
         DateTimeFormatter timeFormat = DateTimeFormatter.ofPattern("HH:mm");
         hourAndMinutes = currentTime.format(timeFormat);
 
-        ResponseEntity<String> weatherNow = callGetMethod("weather",cityName,Config.API_KEY);
+        ResponseEntity<String> weatherNow = callGetMethod("weather",cityName,countryCode,Config.API_KEY);
         ObjectMapper objectMapper = new ObjectMapper();
         try {
             JsonNode jsonNode = objectMapper.readTree(weatherNow.getBody());
@@ -50,8 +51,8 @@ public class OpenWeatherMapClient implements WeatherClient{
     }
 
     @Override
-    public List<Forecast> getForecast(String cityName) {
-
+    public List<Forecast> getForecast(String cityName, String countryName) {
+        String countryCode = getCountryCode(countryName);
         LocalDateTime currentTime = LocalDateTime.now();
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
@@ -62,7 +63,7 @@ public class OpenWeatherMapClient implements WeatherClient{
             currentTime = currentTime.plusDays(1);
         }
 
-        ResponseEntity<String> weatherForecast = callGetMethod("forecast",cityName,Config.API_KEY);
+        ResponseEntity<String> weatherForecast = callGetMethod("forecast",cityName,countryCode,Config.API_KEY);
         ObjectMapper objectMapperForecast = new ObjectMapper();
         List<Forecast> forecastList = new ArrayList<>();
 
@@ -95,10 +96,11 @@ public class OpenWeatherMapClient implements WeatherClient{
     }
 
     @Override
-    public boolean isCityValid(String cityName) {
+    public boolean isCityAndCountryValid(String cityName, String countryName) {
+        String countryCode = getCountryCode(countryName);
         try {
             // Wywołaj metodę zapytania o pogodę dla danej nazwy miasta
-            ResponseEntity<String> response = callGetMethod("weather", cityName, Config.API_KEY);
+            ResponseEntity<String> response = callGetMethod("weather", cityName, countryCode, Config.API_KEY);
 
             // Sprawdź, czy odpowiedź jest poprawna
             return response.getStatusCode() == HttpStatus.OK;
@@ -117,7 +119,7 @@ public class OpenWeatherMapClient implements WeatherClient{
     }
 
     private ResponseEntity<String> callGetMethod (Object...objects) {
-        return restTemplate.getForEntity(WEATHER_URL + "{typeOfWeather}?q={cityName}&appid={apiKey}&units=metric&lang=pl",
+        return restTemplate.getForEntity(WEATHER_URL + "{typeOfWeather}?q={cityName},{countryCode}&appid={apiKey}&units=metric&lang=pl",
                 String.class, objects);
     }
 
@@ -142,5 +144,17 @@ public class OpenWeatherMapClient implements WeatherClient{
         }
         return false;
     }
+
+    public static String getCountryCode(String countryName) {
+        String[] countryCodes = Locale.getISOCountries();
+        for (String countryCode : countryCodes) {
+            Locale locale = new Locale("", countryCode);
+            if (locale.getDisplayCountry().equalsIgnoreCase(countryName)) {
+                return countryCode;
+            }
+        }
+        return null;
+    }
+
 
 }

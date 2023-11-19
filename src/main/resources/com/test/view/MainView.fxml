@@ -163,7 +163,7 @@
       </VBox>
       <Text layoutX="200.0" layoutY="674.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Prognoza dniowa" />
       <Label fx:id="errorLabel" layoutX="486.0" layoutY="798.0" />
-      <Label fx:id="errorCityLabel" layoutX="297.0" layoutY="91.0" prefHeight="17.0" prefWidth="182.0" />
+      <Label fx:id="errorCityLabel" layoutX="288.0" layoutY="91.0" prefHeight="17.0" prefWidth="191.0" />
       <Label fx:id="errorCountryLabel" layoutX="290.0" layoutY="50.0" prefHeight="17.0" prefWidth="191.0" />
    </children>
 </AnchorPane>

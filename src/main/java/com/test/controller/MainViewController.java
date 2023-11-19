@@ -232,22 +232,24 @@ public class MainViewController extends AbstractController{
 
             //Get Data input from user
             String cityName= cityField.getText();
-            
+            String countryName = countryField.getText();
             //if(fieldsAreValid()) {
 
             //}
             //Invoke business logic
             weatherService = WeatherServiceFactory.createWeatherService();
-            if (weatherService.isCityValid(cityName)) {
+            if (weatherService.isCityAndCountryValid(cityName, countryName)) {
                 errorCityLabel.setText("");
-                Weather weather = weatherService.getWeather(cityName);
-                List<Forecast> forecast = weatherService.getForecast(cityName);
+                errorCountryLabel.setText("");
+                Weather weather = weatherService.getWeather(cityName, countryName);
+                List<Forecast> forecast = weatherService.getForecast(cityName, countryName);
 
                 //Display result from business logic
                 displayWeather(weather);
                 displayForecast(forecast);
             } else {
-                errorCityLabel.setText("W bazie danych nie ma takiego miasta!");
+                errorCountryLabel.setText("Dane dla podanego państwa ");
+                errorCityLabel.setText("lub miasta nie są dostępne!");
             }
         }
     }
@@ -261,10 +263,10 @@ public class MainViewController extends AbstractController{
     }
 
     private boolean fieldsAreValid() {
-//        if(countryField.getText().isEmpty()) {
-//            errorCountryLabel.setText("Proszę wpisać państwo!");
-//            return  false;
-//        }
+        if(countryField.getText().isEmpty()) {
+            errorCountryLabel.setText("Proszę wpisać państwo!");
+            return  false;
+        }
         if(cityField.getText().isEmpty()) {
             errorCityLabel.setText("Proszę wpisać miasto!");
             return  false;
