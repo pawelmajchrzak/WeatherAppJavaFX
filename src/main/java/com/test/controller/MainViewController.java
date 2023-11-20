@@ -1,6 +1,7 @@
 package com.test.controller;
 
 import com.test.CityManager;
+import com.test.controller.persistance.CountryAndCity;
 import com.test.model.Forecast;
 import com.test.model.Weather;
 import com.test.model.WeatherService;
@@ -216,10 +217,21 @@ public class MainViewController extends AbstractController{
         dayTemperatureTexts = List.of(forecastTemperature9, forecastTemperature11, forecastTemperature13, forecastTemperature15);
         nightTemperatureTexts = List.of(forecastTemperature8, forecastTemperature10, forecastTemperature12, forecastTemperature14);
         dayImageViews = List.of(forecastImage9, forecastImage11, forecastImage13, forecastImage15);
+
+        if (cityManager != null) {
+            List<CountryAndCity> loadedCityData = cityManager.getCityData();
+            if (loadedCityData != null && !loadedCityData.isEmpty()) {
+                // Jeśli wczytane dane istnieją, możesz użyć ich w dowolny sposób, na przykład, ustawiając domyślne wartości w polach tekstowych
+                CountryAndCity firstCity = loadedCityData.get(0);
+                countryField.setText(firstCity.getCountry());
+                cityField.setText(firstCity.getCity());
+            }
+        }
     }
 
 
     private WeatherService weatherService;
+    //CityManager cityManager;
 
     public MainViewController(CityManager cityManager, ViewFactory viewFactory, String fxmlName) {
         super(cityManager, viewFactory, fxmlName);
@@ -233,14 +245,15 @@ public class MainViewController extends AbstractController{
             //Get Data input from user
             String cityName= cityField.getText();
             String countryName = countryField.getText();
-            //if(fieldsAreValid()) {
 
-            //}
             //Invoke business logic
             weatherService = WeatherServiceFactory.createWeatherService();
             if (weatherService.isCityAndCountryValid(cityName, countryName)) {
                 errorCityLabel.setText("");
                 errorCountryLabel.setText("");
+                //cityManager = new CityManager();
+                cityManager.removeLastCityData();
+                cityManager.addCityData(new CountryAndCity(countryName,cityName));
                 Weather weather = weatherService.getWeather(cityName, countryName);
                 List<Forecast> forecast = weatherService.getForecast(cityName, countryName);
 
