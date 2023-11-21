@@ -227,6 +227,7 @@ public class MainViewController extends AbstractController{
                 cityField.setText(firstCity.getCity());
             }
         }
+        checkWeatherAction();
     }
 
 

@@ -35,6 +35,11 @@ public class ViewFactory {
             return;
         }
         Scene scene = new Scene(parent);
+
+        // Dodaj plik CSS do sceny
+        scene.getStylesheets().add(getClass().getResource("css/style.css").toExternalForm());
+
+
         Stage stage = new Stage();
         stage.setScene(scene);
         stage.show();

@@ -1,0 +1,40 @@
+/* style.css */
+
+/* Zaokrąglone narożniki dla VBox */
+.vbox-rounded {
+    -fx-background-radius: 10;
+}
+
+/* Większa czcionka dla "POGODA ZAWSZE POD RĘKĄ" */
+#titleLabel {
+    -fx-font-size: 20px;
+}
+
+/* Czerwony kolor dla wszystkich labeli o id "errorLabel" */
+#errorLabel {
+    -fx-text-fill: red;
+}
+
+/* Duża i pogrubiona czcionka dla "weatherNowTemperature" oraz "NowTimeHourAndMinutes" */
+#weatherNowTemperature, #NowTimeHourAndMinutes {
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+}
+
+/* Czcionka większa trochę od standardowej dla "weatherNowFeelsLike" oraz "weatherNowDescription" */
+#weatherNowFeelsLike, #weatherNowDescription {
+    -fx-font-size: 14px;
+}
+
+/* Dodatkowe style dla VBox na prognozę godzinową */
+.forecast-vbox {
+    -fx-background-color: #bbddf0;
+}
+.forecast-text {
+    -fx-font-size: 12px;
+    -fx-text-alignment: center;
+}
+.forecast-image {
+    -fx-fit-height: 80.0;
+    -fx-fit-width: 80.0;
+}
