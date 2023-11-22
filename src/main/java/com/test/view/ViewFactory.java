@@ -6,6 +6,8 @@ import com.test.controller.MainViewController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -40,8 +42,11 @@ public class ViewFactory {
         scene.getStylesheets().add(getClass().getResource("css/style.css").toExternalForm());
 
 
+
         Stage stage = new Stage();
         stage.setScene(scene);
+        stage.setTitle("Pogoda 24h w Twoim mieście i na wakacje");
+        stage.getIcons().add(new Image(getClass().getResourceAsStream("ikonaPogody.png")));
         stage.show();
     }
 }

@@ -1,8 +1,12 @@
 /* style.css */
 
+* {
+    -fx-font-size: 14px;
+}
+
 /* Zaokrąglone narożniki dla VBox */
 .vbox-rounded {
-    -fx-background-radius: 10;
+    -fx-background-radius: 30;
 }
 
 /* Większa czcionka dla "POGODA ZAWSZE POD RĘKĄ" */
@@ -11,13 +15,14 @@
 }
 
 /* Czerwony kolor dla wszystkich labeli o id "errorLabel" */
-#errorLabel {
+#errorCityLabel,
+#errorCountryLabel {
     -fx-text-fill: red;
 }
 
 /* Duża i pogrubiona czcionka dla "weatherNowTemperature" oraz "NowTimeHourAndMinutes" */
 #weatherNowTemperature, #NowTimeHourAndMinutes {
-    -fx-font-size: 18px;
+    -fx-font-size: 24px;
     -fx-font-weight: bold;
 }
 
@@ -37,4 +42,30 @@
 .forecast-image {
     -fx-fit-height: 80.0;
     -fx-fit-width: 80.0;
+}
+
+#forecastTemperature8,
+#forecastTemperature10,
+#forecastTemperature12,
+#forecastTemperature14 {
+    -fx-font-size: 11px;
+
+}
+
+#forecastTemperature9,
+#forecastTemperature11,
+#forecastTemperature13,
+#forecastTemperature15 {
+    -fx-font-size: 15px;
+}
+
+#forecastTemperature0,
+#forecastTemperature1,
+#forecastTemperature2,
+#forecastTemperature3,
+#forecastTemperature4,
+#forecastTemperature5,
+#forecastTemperature6,
+#forecastTemperature7 {
+    -fx-font-size: 18px;
 }

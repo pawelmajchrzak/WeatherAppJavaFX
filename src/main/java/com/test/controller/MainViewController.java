@@ -317,7 +317,7 @@ public class MainViewController extends AbstractController{
             Text nightTemperature = nightTemperatureTexts.get(indexOfFieldFromFXML);
 
             dayOfWeek.setText(nightForecast.getDateTime());
-            nightTemperature.setText(String.format("%.0f", nightForecast.getTemperature()) + " °C");
+            nightTemperature.setText("noc " + String.format("%.0f",nightForecast.getTemperature()) + " °C");
             Image weatherImage = new Image("https://openweathermap.org/img/wn/" + dayForecast.getIconWeatherCode() + "@2x.png");
             dayImageView.setImage(weatherImage);
             dayTemperature.setText(String.format("%.0f", dayForecast.getTemperature()) + " °C");
