@@ -18,67 +18,119 @@ import java.util.List;
 
 public class MainViewController extends AbstractController{
 
-
-    @FXML
-    private Label errorLabel;
-
-
-    @FXML
-    private Label errorCityLabel;
-
-    @FXML
-    private Label errorCountryLabel;
-
     @FXML
     private Text DayOfWeek10;
+
+    @FXML
+    private Text DayOfWeek10R;
 
     @FXML
     private Text DayOfWeek12;
 
     @FXML
+    private Text DayOfWeek12R;
+
+    @FXML
     private Text DayOfWeek14;
+
+    @FXML
+    private Text DayOfWeek14R;
 
     @FXML
     private Text DayOfWeek8;
 
     @FXML
+    private Text DayOfWeek8R;
+
+    @FXML
     private Text NowTimeHourAndMinutes;
+
+    @FXML
+    private Text NowTimeHourAndMinutesR;
 
     @FXML
     private TextField cityField;
 
     @FXML
+    private TextField cityFieldR;
+
+    @FXML
     private TextField countryField;
 
     @FXML
-    private Text errorText;
+    private TextField countryFieldR;
+
+    @FXML
+    private Label errorCityLabel;
+
+    @FXML
+    private Label errorCityLabelR;
+
+    @FXML
+    private Label errorCountryLabel;
+
+    @FXML
+    private Label errorCountryLabelR;
+
+    @FXML
+    private Label errorLabel;
+
+    @FXML
+    private Label errorLabel1;
 
     @FXML
     private Text forecastDayAndHour0;
 
     @FXML
+    private Text forecastDayAndHour0R;
+
+    @FXML
     private Text forecastDayAndHour1;
+
+    @FXML
+    private Text forecastDayAndHour1R;
 
     @FXML
     private Text forecastDayAndHour2;
 
     @FXML
+    private Text forecastDayAndHour2R;
+
+    @FXML
     private Text forecastDayAndHour3;
+
+    @FXML
+    private Text forecastDayAndHour3R;
 
     @FXML
     private Text forecastDayAndHour4;
 
     @FXML
+    private Text forecastDayAndHour4R;
+
+    @FXML
     private Text forecastDayAndHour5;
+
+    @FXML
+    private Text forecastDayAndHour5R;
 
     @FXML
     private Text forecastDayAndHour6;
 
     @FXML
+    private Text forecastDayAndHour6R;
+
+    @FXML
     private Text forecastDayAndHour7;
 
     @FXML
+    private Text forecastDayAndHour7R;
+
+    @FXML
     private ImageView forecastImage0;
+
+    @FXML
+    private ImageView forecastImage0R;
 
     @FXML
     private ImageView forecastImage1;
@@ -87,58 +139,118 @@ public class MainViewController extends AbstractController{
     private ImageView forecastImage11;
 
     @FXML
+    private ImageView forecastImage11R;
+
+    @FXML
     private ImageView forecastImage13;
+
+    @FXML
+    private ImageView forecastImage13R;
 
     @FXML
     private ImageView forecastImage15;
 
     @FXML
+    private ImageView forecastImage15R;
+
+    @FXML
+    private ImageView forecastImage1R;
+
+    @FXML
     private ImageView forecastImage2;
+
+    @FXML
+    private ImageView forecastImage2R;
 
     @FXML
     private ImageView forecastImage3;
 
     @FXML
+    private ImageView forecastImage3R;
+
+    @FXML
     private ImageView forecastImage4;
+
+    @FXML
+    private ImageView forecastImage4R;
 
     @FXML
     private ImageView forecastImage5;
 
     @FXML
+    private ImageView forecastImage5R;
+
+    @FXML
     private ImageView forecastImage6;
+
+    @FXML
+    private ImageView forecastImage6R;
 
     @FXML
     private ImageView forecastImage7;
 
     @FXML
+    private ImageView forecastImage7R;
+
+    @FXML
     private ImageView forecastImage9;
+
+    @FXML
+    private ImageView forecastImage9R;
 
     @FXML
     private Text forecastRain0;
 
     @FXML
+    private Text forecastRain0R;
+
+    @FXML
     private Text forecastRain1;
+
+    @FXML
+    private Text forecastRain1R;
 
     @FXML
     private Text forecastRain2;
 
     @FXML
+    private Text forecastRain2R;
+
+    @FXML
     private Text forecastRain3;
+
+    @FXML
+    private Text forecastRain3R;
 
     @FXML
     private Text forecastRain4;
 
     @FXML
+    private Text forecastRain4R;
+
+    @FXML
     private Text forecastRain5;
+
+    @FXML
+    private Text forecastRain5R;
 
     @FXML
     private Text forecastRain6;
 
     @FXML
+    private Text forecastRain6R;
+
+    @FXML
     private Text forecastRain7;
 
     @FXML
+    private Text forecastRain7R;
+
+    @FXML
     private Text forecastTemperature0;
+
+    @FXML
+    private Text forecastTemperature0R;
 
     @FXML
     private Text forecastTemperature1;
@@ -147,55 +259,112 @@ public class MainViewController extends AbstractController{
     private Text forecastTemperature10;
 
     @FXML
+    private Text forecastTemperature10R;
+
+    @FXML
     private Text forecastTemperature11;
+
+    @FXML
+    private Text forecastTemperature11R;
 
     @FXML
     private Text forecastTemperature12;
 
     @FXML
+    private Text forecastTemperature12R;
+
+    @FXML
     private Text forecastTemperature13;
+
+    @FXML
+    private Text forecastTemperature13R;
 
     @FXML
     private Text forecastTemperature14;
 
     @FXML
+    private Text forecastTemperature14R;
+
+    @FXML
     private Text forecastTemperature15;
+
+    @FXML
+    private Text forecastTemperature15R;
+
+    @FXML
+    private Text forecastTemperature1R;
 
     @FXML
     private Text forecastTemperature2;
 
     @FXML
+    private Text forecastTemperature2R;
+
+    @FXML
     private Text forecastTemperature3;
+
+    @FXML
+    private Text forecastTemperature3R;
 
     @FXML
     private Text forecastTemperature4;
 
     @FXML
+    private Text forecastTemperature4R;
+
+    @FXML
     private Text forecastTemperature5;
+
+    @FXML
+    private Text forecastTemperature5R;
 
     @FXML
     private Text forecastTemperature6;
 
     @FXML
+    private Text forecastTemperature6R;
+
+    @FXML
     private Text forecastTemperature7;
+
+    @FXML
+    private Text forecastTemperature7R;
 
     @FXML
     private Text forecastTemperature8;
 
     @FXML
+    private Text forecastTemperature8R;
+
+    @FXML
     private Text forecastTemperature9;
+
+    @FXML
+    private Text forecastTemperature9R;
 
     @FXML
     private Text weatherNowDescription;
 
     @FXML
+    private Text weatherNowDescriptionR;
+
+    @FXML
     private Text weatherNowFeelsLike;
+
+    @FXML
+    private Text weatherNowFeelsLikeR;
 
     @FXML
     private ImageView weatherNowImage;
 
     @FXML
+    private ImageView weatherNowImageR;
+
+    @FXML
     private Text weatherNowTemperature;
+
+    @FXML
+    private Text weatherNowTemperatureR;
 
     private List<Text> dayAndHourTexts;
     private List<ImageView> imageViews;
