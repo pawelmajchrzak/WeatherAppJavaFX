@@ -13,6 +13,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
+
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -366,34 +368,62 @@ public class MainViewController extends AbstractController{
     @FXML
     private Text weatherNowTemperatureR;
 
-    private List<Text> dayAndHourTexts;
     private List<ImageView> imageViews;
-    private List<Text> temperatureTexts;
-    private List<Text> rainTexts;
-    private List<Text> dayOfWeekTexts;
-    private List<Text> dayTemperatureTexts;
-    private List<Text> nightTemperatureTexts;
     private List<ImageView> dayImageViews;
+    private List<ImageView> imageViewsR;
+    private List<ImageView> dayImageViewsR;
+
+    private List<Text> fieldsForWeather;
+    private List<Text> fieldsForWeatherR;
+
+    List<List<Text>> allTextFieldsForecast = new ArrayList<>();
+    List<List<Text>> allTextFieldsForecastR = new ArrayList<>();
 
     @FXML
     private void initialize() {
-        dayAndHourTexts = List.of(forecastDayAndHour0, forecastDayAndHour1, forecastDayAndHour2, forecastDayAndHour3, forecastDayAndHour4, forecastDayAndHour5, forecastDayAndHour6, forecastDayAndHour7);
+        List<Text> dayAndHourTexts = List.of(forecastDayAndHour0, forecastDayAndHour1, forecastDayAndHour2, forecastDayAndHour3, forecastDayAndHour4, forecastDayAndHour5, forecastDayAndHour6, forecastDayAndHour7);
+        List<Text> temperatureTexts = List.of(forecastTemperature0, forecastTemperature1, forecastTemperature2, forecastTemperature3, forecastTemperature4, forecastTemperature5, forecastTemperature6, forecastTemperature7);
+        List<Text> rainTexts = List.of(forecastRain0, forecastRain1, forecastRain2, forecastRain3, forecastRain4, forecastRain5, forecastRain6, forecastRain7);
         imageViews = List.of(forecastImage0, forecastImage1, forecastImage2, forecastImage3, forecastImage4, forecastImage5, forecastImage6, forecastImage7);
-        temperatureTexts = List.of(forecastTemperature0, forecastTemperature1, forecastTemperature2, forecastTemperature3, forecastTemperature4, forecastTemperature5, forecastTemperature6, forecastTemperature7);
-        rainTexts = List.of(forecastRain0, forecastRain1, forecastRain2, forecastRain3, forecastRain4, forecastRain5, forecastRain6, forecastRain7);
-
-        dayOfWeekTexts = List.of(DayOfWeek8, DayOfWeek10, DayOfWeek12, DayOfWeek14);
-        dayTemperatureTexts = List.of(forecastTemperature9, forecastTemperature11, forecastTemperature13, forecastTemperature15);
-        nightTemperatureTexts = List.of(forecastTemperature8, forecastTemperature10, forecastTemperature12, forecastTemperature14);
+        List<Text> dayOfWeekTexts = List.of(DayOfWeek8, DayOfWeek10, DayOfWeek12, DayOfWeek14);
+        List<Text> dayTemperatureTexts = List.of(forecastTemperature9, forecastTemperature11, forecastTemperature13, forecastTemperature15);
+        List<Text> nightTemperatureTexts = List.of(forecastTemperature8, forecastTemperature10, forecastTemperature12, forecastTemperature14);
         dayImageViews = List.of(forecastImage9, forecastImage11, forecastImage13, forecastImage15);
+        allTextFieldsForecast.add(dayAndHourTexts);
+        allTextFieldsForecast.add(temperatureTexts);
+        allTextFieldsForecast.add(rainTexts);
+        allTextFieldsForecast.add(dayOfWeekTexts);
+        allTextFieldsForecast.add(dayTemperatureTexts);
+        allTextFieldsForecast.add(nightTemperatureTexts);
+
+        List<Text> dayAndHourTextsR = List.of(forecastDayAndHour0R, forecastDayAndHour1R, forecastDayAndHour2R, forecastDayAndHour3R, forecastDayAndHour4R, forecastDayAndHour5R, forecastDayAndHour6R, forecastDayAndHour7R);
+        List<Text> temperatureTextsR = List.of(forecastTemperature0R, forecastTemperature1R, forecastTemperature2R, forecastTemperature3R, forecastTemperature4R, forecastTemperature5R, forecastTemperature6R, forecastTemperature7R);
+        List<Text> rainTextsR = List.of(forecastRain0R, forecastRain1R, forecastRain2R, forecastRain3R, forecastRain4R, forecastRain5R, forecastRain6R, forecastRain7R);
+        imageViewsR = List.of(forecastImage0R, forecastImage1R, forecastImage2R, forecastImage3R, forecastImage4R, forecastImage5R, forecastImage6R, forecastImage7R);
+        List<Text> dayOfWeekTextsR = List.of(DayOfWeek8R, DayOfWeek10R, DayOfWeek12R, DayOfWeek14R);
+        List<Text> dayTemperatureTextsR = List.of(forecastTemperature9R, forecastTemperature11R, forecastTemperature13R, forecastTemperature15R);
+        List<Text> nightTemperatureTextsR = List.of(forecastTemperature8R, forecastTemperature10R, forecastTemperature12R, forecastTemperature14R);
+        dayImageViewsR = List.of(forecastImage9R, forecastImage11R, forecastImage13R, forecastImage15R);
+        allTextFieldsForecastR.add(dayAndHourTextsR);
+        allTextFieldsForecastR.add(temperatureTextsR);
+        allTextFieldsForecastR.add(rainTextsR);
+        allTextFieldsForecastR.add(dayOfWeekTextsR);
+        allTextFieldsForecastR.add(dayTemperatureTextsR);
+        allTextFieldsForecastR.add(nightTemperatureTextsR);
+
+        fieldsForWeather = List.of(weatherNowTemperature, NowTimeHourAndMinutes, weatherNowDescription, weatherNowFeelsLike);
+        fieldsForWeatherR = List.of(weatherNowTemperatureR, NowTimeHourAndMinutesR, weatherNowDescriptionR, weatherNowFeelsLikeR);
 
         if (cityManager != null) {
             List<CountryAndCity> loadedCityData = cityManager.getCityData();
             if (loadedCityData != null && !loadedCityData.isEmpty()) {
-                // Jeśli wczytane dane istnieją, możesz użyć ich w dowolny sposób, na przykład, ustawiając domyślne wartości w polach tekstowych
+                // Zrobić else - i inny widok wczytać!!! - tylko do zebrania miasta i państwa albo schować wszystko i wstawić jakieś poczekadło
                 CountryAndCity firstCity = loadedCityData.get(0);
                 countryField.setText(firstCity.getCountry());
                 cityField.setText(firstCity.getCity());
+                CountryAndCity secondCity = loadedCityData.get(1);
+                countryFieldR.setText(secondCity.getCountry());
+                cityFieldR.setText(secondCity.getCity());
             }
         }
         checkWeatherAction();
@@ -401,7 +431,6 @@ public class MainViewController extends AbstractController{
 
 
     private WeatherService weatherService;
-    //CityManager cityManager;
 
     public MainViewController(CityManager cityManager, ViewFactory viewFactory, String fxmlName) {
         super(cityManager, viewFactory, fxmlName);
@@ -409,32 +438,69 @@ public class MainViewController extends AbstractController{
 
     @FXML
     void checkWeatherAction() {
-        System.out.println("weatherChecked !!!");
         if (fieldsAreValid()) {
 
             //Get Data input from user
             String cityName= cityField.getText();
             String countryName = countryField.getText();
+            String side = "lewa";
+
+            String cityNameR= cityFieldR.getText();
+            String countryNameR = countryFieldR.getText();
+            String sideR = "prawa";
 
             //Invoke business logic
             weatherService = WeatherServiceFactory.createWeatherService();
-            if (weatherService.isCityAndCountryValid(cityName, countryName)) {
-                errorCityLabel.setText("");
-                errorCountryLabel.setText("");
-                //cityManager = new CityManager();
+            //displayWeatherAndForecast(cityName, countryName, side);
+            boolean flagCityIsCorrect = isCityCorrect(cityName, countryName);
+            boolean flagCityIsCorrectR = isCityCorrect(cityNameR, countryNameR);
+
+            if (flagCityIsCorrect&&flagCityIsCorrectR) {
+                cityManager.removeLastCityData();
                 cityManager.removeLastCityData();
                 cityManager.addCityData(new CountryAndCity(countryName,cityName));
+                cityManager.addCityData(new CountryAndCity(countryNameR,cityNameR));
+
+                //Pobieranie danych z Rest api
                 Weather weather = weatherService.getWeather(cityName, countryName);
                 List<Forecast> forecast = weatherService.getForecast(cityName, countryName);
+                Weather weatherR = weatherService.getWeather(cityNameR, countryNameR);
+                List<Forecast> forecastR = weatherService.getForecast(cityNameR, countryNameR);
 
-                //Display result from business logic
-                displayWeather(weather);
-                displayForecast(forecast);
-            } else {
-                errorCountryLabel.setText("Dane dla podanego państwa ");
-                errorCityLabel.setText("lub miasta nie są dostępne!");
+                //Pokazywanie danych
+                displayWeather(weather, fieldsForWeather, weatherNowImage);
+                displayWeather(weatherR, fieldsForWeatherR, weatherNowImageR);
+                displayForecast(forecast, allTextFieldsForecast, imageViews, dayImageViews);
+                displayForecast(forecastR, allTextFieldsForecastR, imageViewsR, dayImageViewsR);
             }
+//            if (weatherService.isCityAndCountryValid(cityName, countryName)) {
+//                errorCityLabel.setText("");
+//                errorCountryLabel.setText("");
+//                cityManager.removeLastCityData();
+//                cityManager.addCityData(new CountryAndCity(countryName,cityName));
+//                Weather weather = weatherService.getWeather(cityName, countryName);
+//                List<Forecast> forecast = weatherService.getForecast(cityName, countryName);
+//
+//                //Display result from business logic
+//                displayWeather(weather);
+//                displayForecast(forecast);
+//            } else {
+//                errorCountryLabel.setText("Dane dla podanego państwa ");
+//                errorCityLabel.setText("lub miasta nie są dostępne!");
+//            }
         }
+    }
+
+    private boolean isCityCorrect(String cityName, String countryName) {
+        if (weatherService.isCityAndCountryValid(cityName, countryName)) {
+            errorCityLabel.setText("");
+            errorCountryLabel.setText("");
+            return true;
+        } else {
+            errorCountryLabel.setText("Dane dla podanego państwa ");
+            errorCityLabel.setText("lub miasta nie są dostępne!");
+        }
+        return false;
     }
 
     private String getCityName() {
@@ -456,18 +522,37 @@ public class MainViewController extends AbstractController{
         }
         errorCityLabel.setText("");
         return  true;
-
     }
 
+//    private void displayWeatherAndForecast(String cityName, String countryName, String sideOfDisplay) {
+//        if (weatherService.isCityAndCountryValid(cityName, countryName)) {
+//            errorCityLabel.setText("");
+//            errorCountryLabel.setText("");
+//            cityManager.removeLastCityData();
+//            cityManager.addCityData(new CountryAndCity(countryName, cityName));
+//            Weather weather = weatherService.getWeather(cityName, countryName);
+//            List<Forecast> forecast = weatherService.getForecast(cityName, countryName);
+//
+//            displayWeather(weather, fieldsForWeather, weatherNowImage);
+//            displayForecast(forecast, allTextFieldsForecast);
+//
+//        } else {
+//            errorCountryLabel.setText("Dane dla podanego państwa ");
+//            errorCityLabel.setText("lub miasta nie są dostępne!");
+//        }
+//    }
 
-    private void displayForecast(List<Forecast> forecast) {
+
+    private void displayForecast(List<Forecast> forecast,List<List<Text>> textFieldsForecast, List<ImageView> imageViewsTest, List<ImageView> dayImageViewsTest) {
         for (int indexOfForecastFromModel = 0; indexOfForecastFromModel < 8; indexOfForecastFromModel++) {
             Forecast currentForecast = forecast.get(indexOfForecastFromModel);
             // Uzyskaj dostęp do odpowiednich komponentów graficznych
-            Text dayAndHourText = dayAndHourTexts.get(indexOfForecastFromModel);
-            ImageView imageView = imageViews.get(indexOfForecastFromModel);
-            Text temperatureText = temperatureTexts.get(indexOfForecastFromModel);
-            Text rainText = rainTexts.get(indexOfForecastFromModel);
+            Text dayAndHourText = textFieldsForecast.get(0).get(indexOfForecastFromModel);
+            Text temperatureText = textFieldsForecast.get(1).get(indexOfForecastFromModel);
+            Text rainText = textFieldsForecast.get(2).get(indexOfForecastFromModel);
+            ImageView imageView = imageViewsTest.get(indexOfForecastFromModel);
+
+
             // Ustaw wartości komponentów graficznych
             dayAndHourText.setText(currentForecast.getDateTime());
             Image weatherImage = new Image("https://openweathermap.org/img/wn/" + currentForecast.getIconWeatherCode() + "@2x.png");
@@ -480,10 +565,10 @@ public class MainViewController extends AbstractController{
             Forecast nightForecast = forecast.get(indexOfForecastFromModel);
             Forecast dayForecast = forecast.get(indexOfForecastFromModel+1);
             // Uzyskaj dostęp do odpowiednich komponentów graficznych
-            Text dayOfWeek = dayOfWeekTexts.get(indexOfFieldFromFXML); //tu powinno być od 0 do 3
-            ImageView dayImageView = dayImageViews.get(indexOfFieldFromFXML);
-            Text dayTemperature = dayTemperatureTexts.get(indexOfFieldFromFXML);
-            Text nightTemperature = nightTemperatureTexts.get(indexOfFieldFromFXML);
+            Text dayOfWeek = textFieldsForecast.get(3).get(indexOfFieldFromFXML); //tu powinno być od 0 do 3
+            Text dayTemperature = textFieldsForecast.get(4).get(indexOfFieldFromFXML);
+            Text nightTemperature = textFieldsForecast.get(5).get(indexOfFieldFromFXML);
+            ImageView dayImageView = dayImageViewsTest.get(indexOfFieldFromFXML);
 
             dayOfWeek.setText(nightForecast.getDateTime());
             nightTemperature.setText("noc " + String.format("%.0f",nightForecast.getTemperature()) + " °C");
@@ -494,12 +579,13 @@ public class MainViewController extends AbstractController{
         }
     }
 
-    private void displayWeather(Weather weather) {
-        weatherNowTemperature.setText("" + String.format("%.0f", weather.getCurrentTemperature()) + " °C");
-        NowTimeHourAndMinutes.setText(weather.getCityName() + ", teraz " + weather.getTime());
-        weatherNowDescription.setText("" + weather.getDescriptionWeather());
-        weatherNowFeelsLike.setText("Temperatura odczuwalna " + String.format("%.0f", weather.getFeelsLikeTemperature()) + " °C");
+    private void displayWeather(Weather weather, List<Text> fieldsForWeather, ImageView weatherImage) {
+        fieldsForWeather.get(0).setText("" + String.format("%.0f", weather.getCurrentTemperature()) + " °C");
+        //weatherNowTemperature.setText("" + String.format("%.0f", weather.getCurrentTemperature()) + " °C");
+        fieldsForWeather.get(1).setText(weather.getCityName() + ", teraz " + weather.getTime());
+        fieldsForWeather.get(2).setText("" + weather.getDescriptionWeather());
+        fieldsForWeather.get(3).setText("Temperatura odczuwalna " + String.format("%.0f", weather.getFeelsLikeTemperature()) + " °C");
         Image image = new Image("https://openweathermap.org/img/wn/" + weather.getIconWeatherCode()+"@2x.png");
-        weatherNowImage.setImage(image);
+        weatherImage.setImage(image);
     }
 }

@@ -4,10 +4,7 @@
     -fx-font-size: 14px;
 }
 
-/* Zaokrąglone narożniki dla VBox */
-.vbox-rounded {
-    -fx-background-radius: 30;
-}
+
 
 /* Większa czcionka dla "POGODA ZAWSZE POD RĘKĄ" */
 #titleLabel {
@@ -16,25 +13,30 @@
 
 /* Czerwony kolor dla wszystkich labeli o id "errorLabel" */
 #errorCityLabel,
-#errorCountryLabel {
+#errorCountryLabel,
+#errorCityLabelR,
+#errorCountryLabelR {
     -fx-text-fill: red;
 }
 
 /* Duża i pogrubiona czcionka dla "weatherNowTemperature" oraz "NowTimeHourAndMinutes" */
-#weatherNowTemperature, #NowTimeHourAndMinutes {
+#weatherNowTemperature,
+#NowTimeHourAndMinutes,
+#weatherNowTemperatureR,
+#NowTimeHourAndMinutesR {
     -fx-font-size: 24px;
     -fx-font-weight: bold;
 }
 
 /* Czcionka większa trochę od standardowej dla "weatherNowFeelsLike" oraz "weatherNowDescription" */
-#weatherNowFeelsLike, #weatherNowDescription {
+#weatherNowFeelsLike,
+#weatherNowDescription,
+#weatherNowFeelsLikeR,
+#weatherNowDescriptionR {
     -fx-font-size: 14px;
 }
 
-/* Dodatkowe style dla VBox na prognozę godzinową */
-.forecast-vbox {
-    -fx-background-color: #bbddf0;
-}
+
 .forecast-text {
     -fx-font-size: 12px;
     -fx-text-alignment: center;
@@ -47,7 +49,11 @@
 #forecastTemperature8,
 #forecastTemperature10,
 #forecastTemperature12,
-#forecastTemperature14 {
+#forecastTemperature14,
+#forecastTemperature8R,
+#forecastTemperature10R,
+#forecastTemperature12R,
+#forecastTemperature14R {
     -fx-font-size: 11px;
 
 }
@@ -55,7 +61,11 @@
 #forecastTemperature9,
 #forecastTemperature11,
 #forecastTemperature13,
-#forecastTemperature15 {
+#forecastTemperature15,
+#forecastTemperature9R,
+#forecastTemperature11R,
+#forecastTemperature13R,
+#forecastTemperature15R {
     -fx-font-size: 15px;
 }
 
@@ -66,6 +76,14 @@
 #forecastTemperature4,
 #forecastTemperature5,
 #forecastTemperature6,
-#forecastTemperature7 {
+#forecastTemperature7,
+#forecastTemperature0R,
+#forecastTemperature1R,
+#forecastTemperature2R,
+#forecastTemperature3R,
+#forecastTemperature4R,
+#forecastTemperature5R,
+#forecastTemperature6R,
+#forecastTemperature7R {
     -fx-font-size: 18px;
 }
