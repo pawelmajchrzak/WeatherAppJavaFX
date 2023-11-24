@@ -379,6 +379,8 @@ public class MainViewController extends AbstractController{
     List<List<Text>> allTextFieldsForecast = new ArrayList<>();
     List<List<Text>> allTextFieldsForecastR = new ArrayList<>();
 
+    private WeatherScreenController weatherScreenController;
+
     @FXML
     private void initialize() {
         List<Text> dayAndHourTexts = List.of(forecastDayAndHour0, forecastDayAndHour1, forecastDayAndHour2, forecastDayAndHour3, forecastDayAndHour4, forecastDayAndHour5, forecastDayAndHour6, forecastDayAndHour7);
@@ -414,6 +416,8 @@ public class MainViewController extends AbstractController{
         fieldsForWeather = List.of(weatherNowTemperature, NowTimeHourAndMinutes, weatherNowDescription, weatherNowFeelsLike);
         fieldsForWeatherR = List.of(weatherNowTemperatureR, NowTimeHourAndMinutesR, weatherNowDescriptionR, weatherNowFeelsLikeR);
 
+        weatherScreenController = new WeatherScreenController(imageViews, dayImageViews, fieldsForWeather, fieldsForWeatherR, allTextFieldsForecast, allTextFieldsForecastR);
+
         if (cityManager != null) {
             List<CountryAndCity> loadedCityData = cityManager.getCityData();
             if (loadedCityData != null && !loadedCityData.isEmpty()) {
@@ -429,7 +433,6 @@ public class MainViewController extends AbstractController{
         checkWeatherAction();
     }
 
-
     private WeatherService weatherService;
 
     public MainViewController(CityManager cityManager, ViewFactory viewFactory, String fxmlName) {
@@ -443,15 +446,12 @@ public class MainViewController extends AbstractController{
             //Get Data input from user
             String cityName= cityField.getText();
             String countryName = countryField.getText();
-            String side = "lewa";
 
             String cityNameR= cityFieldR.getText();
             String countryNameR = countryFieldR.getText();
-            String sideR = "prawa";
 
             //Invoke business logic
             weatherService = WeatherServiceFactory.createWeatherService();
-            //displayWeatherAndForecast(cityName, countryName, side);
             boolean flagCityIsCorrect = isCityCorrect(cityName, countryName);
             boolean flagCityIsCorrectR = isCityCorrect(cityNameR, countryNameR);
 
@@ -468,26 +468,12 @@ public class MainViewController extends AbstractController{
                 List<Forecast> forecastR = weatherService.getForecast(cityNameR, countryNameR);
 
                 //Pokazywanie danych
-                displayWeather(weather, fieldsForWeather, weatherNowImage);
-                displayWeather(weatherR, fieldsForWeatherR, weatherNowImageR);
-                displayForecast(forecast, allTextFieldsForecast, imageViews, dayImageViews);
-                displayForecast(forecastR, allTextFieldsForecastR, imageViewsR, dayImageViewsR);
+                weatherScreenController.displayWeather(weather, weatherNowImage, fieldsForWeather);
+                weatherScreenController.displayWeather(weatherR, weatherNowImageR, fieldsForWeatherR);
+                weatherScreenController.displayForecast(forecast, allTextFieldsForecast, imageViews, dayImageViews);
+                weatherScreenController.displayForecast(forecastR, allTextFieldsForecastR, imageViewsR, dayImageViewsR);
             }
-//            if (weatherService.isCityAndCountryValid(cityName, countryName)) {
-//                errorCityLabel.setText("");
-//                errorCountryLabel.setText("");
-//                cityManager.removeLastCityData();
-//                cityManager.addCityData(new CountryAndCity(countryName,cityName));
-//                Weather weather = weatherService.getWeather(cityName, countryName);
-//                List<Forecast> forecast = weatherService.getForecast(cityName, countryName);
-//
-//                //Display result from business logic
-//                displayWeather(weather);
-//                displayForecast(forecast);
-//            } else {
-//                errorCountryLabel.setText("Dane dla podanego państwa ");
-//                errorCityLabel.setText("lub miasta nie są dostępne!");
-//            }
+
         }
     }
 
@@ -503,14 +489,6 @@ public class MainViewController extends AbstractController{
         return false;
     }
 
-    private String getCityName() {
-        if(fieldsAreValid()) {
-            return cityField.getText();
-        } else {
-            return "";
-        }
-    }
-
     private boolean fieldsAreValid() {
         if(countryField.getText().isEmpty()) {
             errorCountryLabel.setText("Proszę wpisać państwo!");
@@ -523,69 +501,5 @@ public class MainViewController extends AbstractController{
         errorCityLabel.setText("");
         return  true;
     }
-
-//    private void displayWeatherAndForecast(String cityName, String countryName, String sideOfDisplay) {
-//        if (weatherService.isCityAndCountryValid(cityName, countryName)) {
-//            errorCityLabel.setText("");
-//            errorCountryLabel.setText("");
-//            cityManager.removeLastCityData();
-//            cityManager.addCityData(new CountryAndCity(countryName, cityName));
-//            Weather weather = weatherService.getWeather(cityName, countryName);
-//            List<Forecast> forecast = weatherService.getForecast(cityName, countryName);
-//
-//            displayWeather(weather, fieldsForWeather, weatherNowImage);
-//            displayForecast(forecast, allTextFieldsForecast);
-//
-//        } else {
-//            errorCountryLabel.setText("Dane dla podanego państwa ");
-//            errorCityLabel.setText("lub miasta nie są dostępne!");
-//        }
-//    }
-
-
-    private void displayForecast(List<Forecast> forecast,List<List<Text>> textFieldsForecast, List<ImageView> imageViewsTest, List<ImageView> dayImageViewsTest) {
-        for (int indexOfForecastFromModel = 0; indexOfForecastFromModel < 8; indexOfForecastFromModel++) {
-            Forecast currentForecast = forecast.get(indexOfForecastFromModel);
-            // Uzyskaj dostęp do odpowiednich komponentów graficznych
-            Text dayAndHourText = textFieldsForecast.get(0).get(indexOfForecastFromModel);
-            Text temperatureText = textFieldsForecast.get(1).get(indexOfForecastFromModel);
-            Text rainText = textFieldsForecast.get(2).get(indexOfForecastFromModel);
-            ImageView imageView = imageViewsTest.get(indexOfForecastFromModel);
-
-
-            // Ustaw wartości komponentów graficznych
-            dayAndHourText.setText(currentForecast.getDateTime());
-            Image weatherImage = new Image("https://openweathermap.org/img/wn/" + currentForecast.getIconWeatherCode() + "@2x.png");
-            imageView.setImage(weatherImage);
-            temperatureText.setText(String.format("%.0f", currentForecast.getTemperature()) + " °C");
-            rainText.setText("Opady: " + String.format("%.0f", currentForecast.getProbabilityRain()) + " %");
-        }
-        int indexOfFieldFromFXML=0;
-        for (int indexOfForecastFromModel = 8; indexOfForecastFromModel < 16; indexOfForecastFromModel+=2) {
-            Forecast nightForecast = forecast.get(indexOfForecastFromModel);
-            Forecast dayForecast = forecast.get(indexOfForecastFromModel+1);
-            // Uzyskaj dostęp do odpowiednich komponentów graficznych
-            Text dayOfWeek = textFieldsForecast.get(3).get(indexOfFieldFromFXML); //tu powinno być od 0 do 3
-            Text dayTemperature = textFieldsForecast.get(4).get(indexOfFieldFromFXML);
-            Text nightTemperature = textFieldsForecast.get(5).get(indexOfFieldFromFXML);
-            ImageView dayImageView = dayImageViewsTest.get(indexOfFieldFromFXML);
-
-            dayOfWeek.setText(nightForecast.getDateTime());
-            nightTemperature.setText("noc " + String.format("%.0f",nightForecast.getTemperature()) + " °C");
-            Image weatherImage = new Image("https://openweathermap.org/img/wn/" + dayForecast.getIconWeatherCode() + "@2x.png");
-            dayImageView.setImage(weatherImage);
-            dayTemperature.setText(String.format("%.0f", dayForecast.getTemperature()) + " °C");
-            indexOfFieldFromFXML++;
-        }
-    }
-
-    private void displayWeather(Weather weather, List<Text> fieldsForWeather, ImageView weatherImage) {
-        fieldsForWeather.get(0).setText("" + String.format("%.0f", weather.getCurrentTemperature()) + " °C");
-        //weatherNowTemperature.setText("" + String.format("%.0f", weather.getCurrentTemperature()) + " °C");
-        fieldsForWeather.get(1).setText(weather.getCityName() + ", teraz " + weather.getTime());
-        fieldsForWeather.get(2).setText("" + weather.getDescriptionWeather());
-        fieldsForWeather.get(3).setText("Temperatura odczuwalna " + String.format("%.0f", weather.getFeelsLikeTemperature()) + " °C");
-        Image image = new Image("https://openweathermap.org/img/wn/" + weather.getIconWeatherCode()+"@2x.png");
-        weatherImage.setImage(image);
-    }
+    
 }
