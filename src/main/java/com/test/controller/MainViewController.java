@@ -381,6 +381,9 @@ public class MainViewController extends AbstractController{
 
     private WeatherScreenController weatherScreenController;
 
+    String secondCityFromFile;
+    String secondCountryFromFile;
+
     @FXML
     private void initialize() {
         List<Text> dayAndHourTexts = List.of(forecastDayAndHour0, forecastDayAndHour1, forecastDayAndHour2, forecastDayAndHour3, forecastDayAndHour4, forecastDayAndHour5, forecastDayAndHour6, forecastDayAndHour7);
@@ -418,6 +421,8 @@ public class MainViewController extends AbstractController{
 
         weatherScreenController = new WeatherScreenController(imageViews, dayImageViews, fieldsForWeather, fieldsForWeatherR, allTextFieldsForecast, allTextFieldsForecastR);
 
+
+
         if (cityManager != null) {
             List<CountryAndCity> loadedCityData = cityManager.getCityData();
             if (loadedCityData != null && !loadedCityData.isEmpty()) {
@@ -428,6 +433,8 @@ public class MainViewController extends AbstractController{
                 CountryAndCity secondCity = loadedCityData.get(1);
                 countryFieldR.setText(secondCity.getCountry());
                 cityFieldR.setText(secondCity.getCity());
+                secondCountryFromFile = secondCity.getCountry();
+                secondCityFromFile = secondCity.getCity();
             }
         }
         checkWeatherAction();
@@ -455,24 +462,52 @@ public class MainViewController extends AbstractController{
             boolean flagCityIsCorrect = isCityCorrect(cityName, countryName);
             boolean flagCityIsCorrectR = isCityCorrect(cityNameR, countryNameR);
 
-            if (flagCityIsCorrect&&flagCityIsCorrectR) {
+            if (flagCityIsCorrect) {
                 cityManager.removeLastCityData();
                 cityManager.removeLastCityData();
                 cityManager.addCityData(new CountryAndCity(countryName,cityName));
-                cityManager.addCityData(new CountryAndCity(countryNameR,cityNameR));
+                cityManager.addCityData(new CountryAndCity(secondCountryFromFile,secondCityFromFile));
 
                 //Pobieranie danych z Rest api
                 Weather weather = weatherService.getWeather(cityName, countryName);
                 List<Forecast> forecast = weatherService.getForecast(cityName, countryName);
+
+                //Pokazywanie danych
+                weatherScreenController.displayWeather(weather, weatherNowImage, fieldsForWeather);
+                weatherScreenController.displayForecast(forecast, allTextFieldsForecast, imageViews, dayImageViews);
+            }
+
+            if (flagCityIsCorrectR) {
+                cityManager.removeLastCityData();
+                cityManager.addCityData(new CountryAndCity(countryNameR,cityNameR));
+
+                //Pobieranie danych z Rest api
                 Weather weatherR = weatherService.getWeather(cityNameR, countryNameR);
                 List<Forecast> forecastR = weatherService.getForecast(cityNameR, countryNameR);
 
                 //Pokazywanie danych
-                weatherScreenController.displayWeather(weather, weatherNowImage, fieldsForWeather);
                 weatherScreenController.displayWeather(weatherR, weatherNowImageR, fieldsForWeatherR);
-                weatherScreenController.displayForecast(forecast, allTextFieldsForecast, imageViews, dayImageViews);
                 weatherScreenController.displayForecast(forecastR, allTextFieldsForecastR, imageViewsR, dayImageViewsR);
             }
+
+//            if (flagCityIsCorrect&&flagCityIsCorrectR) {
+//                cityManager.removeLastCityData();
+//                cityManager.removeLastCityData();
+//                cityManager.addCityData(new CountryAndCity(countryName,cityName));
+//                cityManager.addCityData(new CountryAndCity(countryNameR,cityNameR));
+//
+//                //Pobieranie danych z Rest api
+//                Weather weather = weatherService.getWeather(cityName, countryName);
+//                List<Forecast> forecast = weatherService.getForecast(cityName, countryName);
+//                Weather weatherR = weatherService.getWeather(cityNameR, countryNameR);
+//                List<Forecast> forecastR = weatherService.getForecast(cityNameR, countryNameR);
+//
+//                //Pokazywanie danych
+//                weatherScreenController.displayWeather(weather, weatherNowImage, fieldsForWeather);
+//                weatherScreenController.displayWeather(weatherR, weatherNowImageR, fieldsForWeatherR);
+//                weatherScreenController.displayForecast(forecast, allTextFieldsForecast, imageViews, dayImageViews);
+//                weatherScreenController.displayForecast(forecastR, allTextFieldsForecastR, imageViewsR, dayImageViewsR);
+//            }
 
         }
     }
@@ -501,5 +536,5 @@ public class MainViewController extends AbstractController{
         errorCityLabel.setText("");
         return  true;
     }
-    
+
 }
