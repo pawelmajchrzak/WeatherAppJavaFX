@@ -459,8 +459,8 @@ public class MainViewController extends AbstractController{
 
             //Invoke business logic
             weatherService = WeatherServiceFactory.createWeatherService();
-            boolean flagCityIsCorrect = isCityCorrect(cityName, countryName);
-            boolean flagCityIsCorrectR = isCityCorrect(cityNameR, countryNameR);
+            boolean flagCityIsCorrect = isCityCorrect(cityName, countryName, errorCityLabel, errorCountryLabel);
+            boolean flagCityIsCorrectR = isCityCorrect(cityNameR, countryNameR, errorCityLabelR, errorCountryLabelR);
 
             if (flagCityIsCorrect) {
                 cityManager.removeLastCityData();
@@ -480,6 +480,8 @@ public class MainViewController extends AbstractController{
             if (flagCityIsCorrectR) {
                 cityManager.removeLastCityData();
                 cityManager.addCityData(new CountryAndCity(countryNameR,cityNameR));
+                secondCountryFromFile = countryNameR;
+                secondCityFromFile = cityNameR;
 
                 //Pobieranie danych z Rest api
                 Weather weatherR = weatherService.getWeather(cityNameR, countryNameR);
@@ -490,36 +492,17 @@ public class MainViewController extends AbstractController{
                 weatherScreenController.displayForecast(forecastR, allTextFieldsForecastR, imageViewsR, dayImageViewsR);
             }
 
-//            if (flagCityIsCorrect&&flagCityIsCorrectR) {
-//                cityManager.removeLastCityData();
-//                cityManager.removeLastCityData();
-//                cityManager.addCityData(new CountryAndCity(countryName,cityName));
-//                cityManager.addCityData(new CountryAndCity(countryNameR,cityNameR));
-//
-//                //Pobieranie danych z Rest api
-//                Weather weather = weatherService.getWeather(cityName, countryName);
-//                List<Forecast> forecast = weatherService.getForecast(cityName, countryName);
-//                Weather weatherR = weatherService.getWeather(cityNameR, countryNameR);
-//                List<Forecast> forecastR = weatherService.getForecast(cityNameR, countryNameR);
-//
-//                //Pokazywanie danych
-//                weatherScreenController.displayWeather(weather, weatherNowImage, fieldsForWeather);
-//                weatherScreenController.displayWeather(weatherR, weatherNowImageR, fieldsForWeatherR);
-//                weatherScreenController.displayForecast(forecast, allTextFieldsForecast, imageViews, dayImageViews);
-//                weatherScreenController.displayForecast(forecastR, allTextFieldsForecastR, imageViewsR, dayImageViewsR);
-//            }
-
         }
     }
 
-    private boolean isCityCorrect(String cityName, String countryName) {
+    private boolean isCityCorrect(String cityName, String countryName, Label cityLabel, Label countryLabel) {
         if (weatherService.isCityAndCountryValid(cityName, countryName)) {
-            errorCityLabel.setText("");
-            errorCountryLabel.setText("");
+            cityLabel.setText("");
+            countryLabel.setText("");
             return true;
         } else {
-            errorCountryLabel.setText("Dane dla podanego państwa ");
-            errorCityLabel.setText("lub miasta nie są dostępne!");
+            countryLabel.setText("Dane dla podanego państwa ");
+            cityLabel.setText("lub miasta nie są dostępne!");
         }
         return false;
     }
