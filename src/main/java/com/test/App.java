@@ -25,10 +25,14 @@ public class App extends Application {
 
         ViewFactory viewFactory = new ViewFactory(cityManager);
         List<CountryAndCity> countryAndCityList = persistenceAccess.loadFromPersistence();
+
         if(countryAndCityList.size() > 0) {
             cityManager.setCityData(countryAndCityList);
+            viewFactory.showMainView();
+        } else {
+            viewFactory.showWelcomeView();
         }
-        viewFactory.showMainView();
+
 
 
 

@@ -3,6 +3,7 @@ package com.test.view;
 import com.test.CityManager;
 import com.test.controller.AbstractController;
 import com.test.controller.MainViewController;
+import com.test.controller.WelcomeViewController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -21,8 +22,13 @@ public class ViewFactory {
     }
 
     public void showMainView(){
-        System.out.println("show Main View");
         AbstractController controller = new MainViewController(cityManager, this, "MainView.fxml");
+        initializeStage(controller);
+    }
+
+    public void showWelcomeView(){
+        AbstractController controller = new WelcomeViewController(cityManager, this, "WelcomeView.fxml");
+        System.out.println("fdgadf");
         initializeStage(controller);
     }
 

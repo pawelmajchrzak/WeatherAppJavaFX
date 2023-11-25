@@ -19,6 +19,8 @@ public class PersistenceAccess {
             ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
             List<CountryAndCity> persistedList = (List<CountryAndCity>) objectInputStream.readObject();
             resultList.addAll(persistedList);
+        } catch (FileNotFoundException e) {
+            return resultList;
         } catch (Exception e) {
             e.printStackTrace();
         }

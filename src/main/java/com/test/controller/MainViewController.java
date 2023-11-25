@@ -435,6 +435,7 @@ public class MainViewController extends AbstractController{
                 cityFieldR.setText(secondCity.getCity());
                 secondCountryFromFile = secondCity.getCountry();
                 secondCityFromFile = secondCity.getCity();
+
             }
         }
         checkWeatherAction();
