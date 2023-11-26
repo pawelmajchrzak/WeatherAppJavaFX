@@ -17,4 +17,5 @@ out/*
 .idea
 
 src/main/java/com/test/model/client/Config.java
+*/Config.java
 
