@@ -1,0 +1,89 @@
+Label,
+Text,
+Button,
+TextInput {
+    -fx-font-size: 14px;
+}
+
+#titleLabel {
+    -fx-font-size: 20px;
+}
+
+#errorCityLabel,
+#errorCountryLabel,
+#errorCityLabelR,
+#errorCountryLabelR {
+    -fx-text-fill: red;
+}
+
+#weatherNowTemperature,
+#NowTimeHourAndMinutes,
+#weatherNowTemperatureR,
+#NowTimeHourAndMinutesR,
+#titleLabelWelcome {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+}
+
+#weatherNowFeelsLike,
+#weatherNowDescription,
+#weatherNowFeelsLikeR,
+#weatherNowDescriptionR {
+    -fx-font-size: 14px;
+}
+
+.forecast-text {
+    -fx-font-size: 12px;
+    -fx-text-alignment: center;
+}
+.forecast-image {
+    -fx-fit-height: 80.0;
+    -fx-fit-width: 80.0;
+}
+
+#forecastTemperature8,
+#forecastTemperature10,
+#forecastTemperature12,
+#forecastTemperature14,
+#forecastTemperature8R,
+#forecastTemperature10R,
+#forecastTemperature12R,
+#forecastTemperature14R {
+    -fx-font-size: 11px;
+
+}
+
+#forecastTemperature9,
+#forecastTemperature11,
+#forecastTemperature13,
+#forecastTemperature15,
+#forecastTemperature9R,
+#forecastTemperature11R,
+#forecastTemperature13R,
+#forecastTemperature15R {
+    -fx-font-size: 15px;
+}
+
+#forecastTemperature0,
+#forecastTemperature1,
+#forecastTemperature2,
+#forecastTemperature3,
+#forecastTemperature4,
+#forecastTemperature5,
+#forecastTemperature6,
+#forecastTemperature7,
+#forecastTemperature0R,
+#forecastTemperature1R,
+#forecastTemperature2R,
+#forecastTemperature3R,
+#forecastTemperature4R,
+#forecastTemperature5R,
+#forecastTemperature6R,
+#forecastTemperature7R {
+    -fx-font-size: 18px;
+}
+
+#errorLabel,
+#errorLabelR {
+    -fx-fill: red;
+}

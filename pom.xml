@@ -70,6 +70,42 @@
       <version>${javafx.version}</version>
     </dependency>
 
+<!--    <dependency>-->
+<!--      <groupId>org.apache.httpcomponents</groupId>-->
+<!--      <artifactId>httpclient</artifactId>-->
+<!--      <version>4.5.14</version>-->
+<!--    </dependency>-->
+
+    <dependency>
+      <groupId>org.apache.httpcomponents.client5</groupId>
+      <artifactId>httpclient5</artifactId>
+      <version>5.2.1</version>
+    </dependency>
+
+    <dependency>
+      <groupId>club.javafamily</groupId>
+      <artifactId>javafamily-resttemplate-starter</artifactId>
+      <version>2.3.2-beta.4</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter</artifactId>
+      <version>2.6.0</version>
+    </dependency>
+
+    <dependency>
+      <groupId>com.fasterxml.jackson.core</groupId>
+      <artifactId>jackson-databind</artifactId>
+      <version>2.13.0</version> <!-- Aktualna wersja może się różnić -->
+    </dependency>
+
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-web</artifactId>
+      <version>5.3.10</version>
+    </dependency>
+
   </dependencies>
 
   <build>
