@@ -49,7 +49,6 @@ public class OpenWeatherMapClient implements WeatherClient{
         }
         return new Weather(temperature, hourAndMinutes, iconWeatherCode, descriptionWeather, feelsLikeTemperature,cityName);
     }
-
     @Override
     public List<Forecast> getForecast(String cityName, String countryName) {
         String countryCode = getCountryCode(countryName);
@@ -99,13 +98,9 @@ public class OpenWeatherMapClient implements WeatherClient{
     public boolean isCityAndCountryValid(String cityName, String countryName) {
         String countryCode = getCountryCode(countryName);
         try {
-            // Wywołaj metodę zapytania o pogodę dla danej nazwy miasta
             ResponseEntity<String> response = callGetMethod("weather", cityName, countryCode, Config.API_KEY);
-
-            // Sprawdź, czy odpowiedź jest poprawna
             return response.getStatusCode() == HttpStatus.OK;
         } catch (Exception e) {
-            // Obsłuż ewentualne błędy
             e.printStackTrace();
             return false;
         }

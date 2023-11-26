@@ -4,9 +4,9 @@ import com.test.CityManager;
 import com.test.controller.persistance.CountryAndCity;
 import com.test.controller.persistance.PersistenceAccess;
 import com.test.model.WeatherService;
+import com.test.model.WeatherServiceFactory;
 import com.test.view.ViewFactory;
 import javafx.fxml.FXML;
-import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -32,18 +32,21 @@ public class WelcomeViewController extends AbstractController {
     @FXML
     private Text errorLabelR;
 
+
+
     private PersistenceAccess persistenceAccess = new PersistenceAccess();
 
     @FXML
     void checkWeatherAction() {
-        //Get Data input from user
+
         String cityName= cityField.getText();
         String countryName = countryField.getText();
 
         String cityNameR= cityFieldR.getText();
         String countryNameR = countryFieldR.getText();
 
-        if (fieldsAreValid()) {
+        weatherService = WeatherServiceFactory.createWeatherService();
+        if (fieldsAreValid()&&isCityCorrect(cityName,countryName,errorLabel)&&isCityCorrect(cityNameR,countryNameR,errorLabelR)) {
             cityManager.addCityData(new CountryAndCity(countryName,cityName));
             cityManager.addCityData(new CountryAndCity(countryNameR,cityNameR));
 
@@ -54,48 +57,45 @@ public class WelcomeViewController extends AbstractController {
             viewFactory.showMainView();
         }
 
+    }
 
-        WeatherService weatherService;
+    WeatherService weatherService;
 
-//        private boolean isCityCorrect(String cityName, String countryName, Text errorLabel) {
-//            if (weatherService.isCityAndCountryValid(cityName, countryName)) {
-//                errorLabel.setText("");
-//                return true;
-//            } else {
-//                errorLabel.setText("Dane dla podanego miasta nie są dostępne ");
-//            }
-//            return false;
-//        }
-
-
-
+    private boolean isCityCorrect(String cityName, String countryName, Text errorLabel) {
+            if (weatherService.isCityAndCountryValid(cityName, countryName)) {
+                errorLabel.setText("");
+                return true;
+            } else {
+                errorLabel.setText("Dane dla podanego miasta nie są dostępne ");
+            }
+            return false;
     }
     public WelcomeViewController(CityManager cityManager, ViewFactory viewFactory, String fxmlName) {
         super(cityManager, viewFactory, fxmlName);
     }
 
-
     private boolean fieldsAreValid() {
         if(countryField.getText().isEmpty()) {
             errorLabel.setText("Proszę wpisać państwo!");
             return  false;
-        }
-        if(cityField.getText().isEmpty()) {
+        } else if (cityField.getText().isEmpty()){
             errorLabel.setText("Proszę wpisać miasto!");
             return  false;
+        } else {
+            errorLabel.setText("");
         }
+
         if(countryFieldR.getText().isEmpty()) {
             errorLabelR.setText("Proszę wpisać państwo!");
             return  false;
-        }
-        if(cityFieldR.getText().isEmpty()) {
+        } else if (cityFieldR.getText().isEmpty()){
             errorLabelR.setText("Proszę wpisać miasto!");
             return  false;
+        } else {
+            errorLabelR.setText("");
         }
-        errorLabel.setText("");
-        errorLabelR.setText("");
+
         return  true;
     }
-
 
 }

@@ -10,7 +10,6 @@ import com.test.view.ViewFactory;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
 
@@ -426,7 +425,7 @@ public class MainViewController extends AbstractController{
         if (cityManager != null) {
             List<CountryAndCity> loadedCityData = cityManager.getCityData();
             if (loadedCityData != null && !loadedCityData.isEmpty()) {
-                // Zrobić else - i inny widok wczytać!!! - tylko do zebrania miasta i państwa albo schować wszystko i wstawić jakieś poczekadło
+
                 CountryAndCity firstCity = loadedCityData.get(0);
                 countryField.setText(firstCity.getCountry());
                 cityField.setText(firstCity.getCity());
@@ -435,7 +434,6 @@ public class MainViewController extends AbstractController{
                 cityFieldR.setText(secondCity.getCity());
                 secondCountryFromFile = secondCity.getCountry();
                 secondCityFromFile = secondCity.getCity();
-
             }
         }
         checkWeatherAction();
@@ -451,14 +449,12 @@ public class MainViewController extends AbstractController{
     void checkWeatherAction() {
         if (fieldsAreValid()) {
 
-            //Get Data input from user
             String cityName= cityField.getText();
             String countryName = countryField.getText();
 
             String cityNameR= cityFieldR.getText();
             String countryNameR = countryFieldR.getText();
 
-            //Invoke business logic
             weatherService = WeatherServiceFactory.createWeatherService();
             boolean flagCityIsCorrect = isCityCorrect(cityName, countryName, errorCityLabel, errorCountryLabel);
             boolean flagCityIsCorrectR = isCityCorrect(cityNameR, countryNameR, errorCityLabelR, errorCountryLabelR);
@@ -469,11 +465,9 @@ public class MainViewController extends AbstractController{
                 cityManager.addCityData(new CountryAndCity(countryName,cityName));
                 cityManager.addCityData(new CountryAndCity(secondCountryFromFile,secondCityFromFile));
 
-                //Pobieranie danych z Rest api
                 Weather weather = weatherService.getWeather(cityName, countryName);
                 List<Forecast> forecast = weatherService.getForecast(cityName, countryName);
 
-                //Pokazywanie danych
                 weatherScreenController.displayWeather(weather, weatherNowImage, fieldsForWeather);
                 weatherScreenController.displayForecast(forecast, allTextFieldsForecast, imageViews, dayImageViews);
             }
@@ -484,11 +478,9 @@ public class MainViewController extends AbstractController{
                 secondCountryFromFile = countryNameR;
                 secondCityFromFile = cityNameR;
 
-                //Pobieranie danych z Rest api
                 Weather weatherR = weatherService.getWeather(cityNameR, countryNameR);
                 List<Forecast> forecastR = weatherService.getForecast(cityNameR, countryNameR);
 
-                //Pokazywanie danych
                 weatherScreenController.displayWeather(weatherR, weatherNowImageR, fieldsForWeatherR);
                 weatherScreenController.displayForecast(forecastR, allTextFieldsForecastR, imageViewsR, dayImageViewsR);
             }

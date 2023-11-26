@@ -1,17 +1,14 @@
-/* style.css */
-
-* {
+Label,
+Text,
+Button,
+TextInput {
     -fx-font-size: 14px;
 }
 
-
-
-/* Większa czcionka dla "POGODA ZAWSZE POD RĘKĄ" */
 #titleLabel {
     -fx-font-size: 20px;
 }
 
-/* Czerwony kolor dla wszystkich labeli o id "errorLabel" */
 #errorCityLabel,
 #errorCountryLabel,
 #errorCityLabelR,
@@ -19,23 +16,21 @@
     -fx-text-fill: red;
 }
 
-/* Duża i pogrubiona czcionka dla "weatherNowTemperature" oraz "NowTimeHourAndMinutes" */
 #weatherNowTemperature,
 #NowTimeHourAndMinutes,
 #weatherNowTemperatureR,
-#NowTimeHourAndMinutesR {
+#NowTimeHourAndMinutesR,
+#titleLabelWelcome {
     -fx-font-size: 24px;
     -fx-font-weight: bold;
 }
 
-/* Czcionka większa trochę od standardowej dla "weatherNowFeelsLike" oraz "weatherNowDescription" */
 #weatherNowFeelsLike,
 #weatherNowDescription,
 #weatherNowFeelsLikeR,
 #weatherNowDescriptionR {
     -fx-font-size: 14px;
 }
-
 
 .forecast-text {
     -fx-font-size: 12px;
@@ -86,4 +81,9 @@
 #forecastTemperature6R,
 #forecastTemperature7R {
     -fx-font-size: 18px;
+}
+
+#errorLabel,
+#errorLabelR {
+    -fx-fill: red;
 }

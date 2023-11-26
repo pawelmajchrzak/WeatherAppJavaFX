@@ -33,12 +33,7 @@ public class App extends Application {
             viewFactory.showWelcomeView();
         }
 
-
-
-
     }
-
-
 
     @Override
     public void stop() throws Exception {

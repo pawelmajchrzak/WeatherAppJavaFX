@@ -7,7 +7,6 @@ import com.test.controller.WelcomeViewController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
@@ -28,7 +27,6 @@ public class ViewFactory {
 
     public void showWelcomeView(){
         AbstractController controller = new WelcomeViewController(cityManager, this, "WelcomeView.fxml");
-        System.out.println("fdgadf");
         initializeStage(controller);
     }
 
@@ -44,10 +42,7 @@ public class ViewFactory {
         }
         Scene scene = new Scene(parent);
 
-        // Dodaj plik CSS do sceny
         scene.getStylesheets().add(getClass().getResource("css/style.css").toExternalForm());
-
-
 
         Stage stage = new Stage();
         stage.setScene(scene);

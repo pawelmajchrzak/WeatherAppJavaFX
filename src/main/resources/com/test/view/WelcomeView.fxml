@@ -8,7 +8,6 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-
 <AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #d7eaf5;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <Label layoutX="50.0" layoutY="221.0" text="Państwo:" />
@@ -17,9 +16,9 @@
       <TextField fx:id="cityField" layoutX="111.0" layoutY="251.0" />
       <Line endX="-100.0" endY="-72.0" layoutX="400.0" layoutY="223.0" startX="-100.0" startY="95.0" />
       <Button layoutX="126.0" layoutY="335.0" mnemonicParsing="false" onAction="#checkWeatherAction" prefHeight="37.0" prefWidth="348.0" text="Sprawdź pogodę" />
-      <Label contentDisplay="CENTER" layoutX="118.0" layoutY="22.0" prefHeight="35.0" prefWidth="364.0" text="Pogoda 24h w Twiom mieście i na wakacje" textAlignment="CENTER">
+      <Label fx:id="titleLabelWelcome" contentDisplay="CENTER" layoutX="55.0" layoutY="23.0" prefHeight="35.0" prefWidth="495.0" styleClass="label-title-welcome" text="Pogoda 24h w Twiom mieście i na wakacje" textAlignment="CENTER">
          <font>
-            <Font name="System Bold" size="18.0" />
+            <Font name="System Bold" size="24.0" />
          </font>
       </Label>
       <Text layoutX="88.0" layoutY="84.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Witam Cię, ta aplikacja pozwoli Tobie lepiej zaplanować codzienność oraz wyjazdy na wakacje. Pokazuje pogodę aktualną i prognozę na kolejne dni. Wybierz swoje miejsca i sprawdź pogodę!" textAlignment="CENTER" wrappingWidth="425.0">
@@ -41,7 +40,7 @@
             <Font size="14.0" />
          </font>
       </Text>
-      <Text fx:id="errorLabel" layoutX="53.0" layoutY="306.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" wrappingWidth="212.13671875" />
-      <Text fx:id="errorLabelR" layoutX="330.0" layoutY="306.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" wrappingWidth="212.13671875" />
+      <Text fx:id="errorLabel" layoutX="28.0" layoutY="305.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="263.13671875" />
+      <Text fx:id="errorLabelR" layoutX="310.0" layoutY="304.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="275.13671875" />
    </children>
 </AnchorPane>

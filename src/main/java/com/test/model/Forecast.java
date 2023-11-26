@@ -1,7 +1,5 @@
 package com.test.model;
 
-import java.time.LocalDate;
-
 public class Forecast {
     private final double temperature;
     private final String dateTime;
