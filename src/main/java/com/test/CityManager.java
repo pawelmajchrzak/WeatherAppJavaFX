@@ -8,9 +8,7 @@ import java.util.List;
 public class CityManager {
 
     private List<CountryAndCity> cityData = new ArrayList<>();
-    public List<CountryAndCity> getDataToSave() {
-        return cityData;
-    }
+
     public void setCityData(List<CountryAndCity> cityData) {
         this.cityData = cityData;
     }

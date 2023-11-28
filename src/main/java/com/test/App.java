@@ -5,14 +5,8 @@ import com.test.controller.persistance.PersistenceAccess;
 import com.test.view.ViewFactory;
 import javafx.application.Application;
 import javafx.stage.Stage;
-
-import java.io.File;
 import java.util.List;
 
-/**
- * Hello world!
- *
- */
 public class App extends Application {
     public static void main( String[] args ) {
         launch(args);
@@ -38,7 +32,7 @@ public class App extends Application {
     @Override
     public void stop() throws Exception {
 
-        List<CountryAndCity> dataToSave = cityManager.getDataToSave();
+        List<CountryAndCity> dataToSave = cityManager.getCityData();
         persistenceAccess.saveToPersistence(dataToSave);
 
     }

@@ -50,7 +50,7 @@ public class WelcomeViewController extends AbstractController {
             cityManager.addCityData(new CountryAndCity(countryName,cityName));
             cityManager.addCityData(new CountryAndCity(countryNameR,cityNameR));
 
-            List<CountryAndCity> dataToSave = cityManager.getDataToSave();
+            List<CountryAndCity> dataToSave = cityManager.getCityData();
             persistenceAccess.saveToPersistence(dataToSave);
             Stage oldStage = (Stage) cityField.getScene().getWindow();
             oldStage.close();
