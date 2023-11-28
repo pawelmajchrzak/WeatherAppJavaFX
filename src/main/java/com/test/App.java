@@ -11,29 +11,26 @@ public class App extends Application {
     public static void main( String[] args ) {
         launch(args);
     }
-    private PersistenceAccess persistenceAccess = new PersistenceAccess();
-    private CityManager cityManager = new CityManager();
+    //private PersistenceAccess persistenceAccess = new PersistenceAccess();
 
     @Override
     public void start(Stage stage) throws Exception {
 
-        ViewFactory viewFactory = new ViewFactory(cityManager);
-        List<CountryAndCity> countryAndCityList = persistenceAccess.loadFromPersistence();
-
-        if(countryAndCityList.size() > 0) {
-            cityManager.setCityData(countryAndCityList);
-            viewFactory.showMainView();
-        } else {
-            viewFactory.showWelcomeView();
-        }
-
+        ViewFactory viewFactory = new ViewFactory();
+        //List<CountryAndCity> countryAndCityList = persistenceAccess.loadFromPersistence();
+        viewFactory.showWelcomeView();
+//        if(countryAndCityList.size() > 0) {
+//            viewFactory.showMainView();
+//        } else {
+//            viewFactory.showWelcomeView();
+//        }
     }
 
     @Override
     public void stop() throws Exception {
 
-        List<CountryAndCity> dataToSave = cityManager.getCityData();
-        persistenceAccess.saveToPersistence(dataToSave);
+        //List<CountryAndCity> dataToSave = cityManager.getCityData();
+        //persistenceAccess.saveToPersistence(dataToSave);
 
     }
 }

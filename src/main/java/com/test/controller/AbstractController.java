@@ -5,12 +5,12 @@ import com.test.view.ViewFactory;
 
 public abstract class AbstractController {
 
-    protected CityManager cityManager;
+    //protected CityManager cityManager;
     protected ViewFactory viewFactory;
     private String fxmlName;
 
-    public AbstractController(CityManager cityManager, ViewFactory viewFactory, String fxmlName) {
-        this.cityManager = cityManager;
+    public AbstractController(ViewFactory viewFactory, String fxmlName) {
+
         this.viewFactory = viewFactory;
         this.fxmlName = fxmlName;
     }

@@ -383,6 +383,7 @@ public class MainViewController extends AbstractController{
     String secondCityFromFile;
     String secondCountryFromFile;
 
+    CityManager cityManager2 = new CityManager();
     @FXML
     private void initialize() {
         List<Text> dayAndHourTexts = List.of(forecastDayAndHour0, forecastDayAndHour1, forecastDayAndHour2, forecastDayAndHour3, forecastDayAndHour4, forecastDayAndHour5, forecastDayAndHour6, forecastDayAndHour7);
@@ -420,10 +421,10 @@ public class MainViewController extends AbstractController{
 
         weatherScreenController = new WeatherScreenController(imageViews, dayImageViews, fieldsForWeather, fieldsForWeatherR, allTextFieldsForecast, allTextFieldsForecastR);
 
+        List<CountryAndCity> loadedCityData = cityManager2.getCityData();
 
-
-        if (cityManager != null) {
-            List<CountryAndCity> loadedCityData = cityManager.getCityData();
+        if (cityManager2 != null) {
+            //List<CountryAndCity> loadedCityData = cityManager.getCityData();
             if (loadedCityData != null && !loadedCityData.isEmpty()) {
 
                 CountryAndCity firstCity = loadedCityData.get(0);
@@ -441,8 +442,8 @@ public class MainViewController extends AbstractController{
 
     private WeatherService weatherService;
 
-    public MainViewController(CityManager cityManager, ViewFactory viewFactory, String fxmlName) {
-        super(cityManager, viewFactory, fxmlName);
+    public MainViewController(ViewFactory viewFactory, String fxmlName) {
+        super(viewFactory, fxmlName);
     }
 
     @FXML
@@ -460,10 +461,10 @@ public class MainViewController extends AbstractController{
             boolean flagCityIsCorrectR = isCityCorrect(cityNameR, countryNameR, errorCityLabelR, errorCountryLabelR);
 
             if (flagCityIsCorrect) {
-                cityManager.removeLastCityData();
-                cityManager.removeLastCityData();
-                cityManager.addCityData(new CountryAndCity(countryName,cityName));
-                cityManager.addCityData(new CountryAndCity(secondCountryFromFile,secondCityFromFile));
+                cityManager2.removeLastCityData();
+                cityManager2.removeLastCityData();
+                cityManager2.addCityData(new CountryAndCity(countryName,cityName));
+                cityManager2.addCityData(new CountryAndCity(secondCountryFromFile,secondCityFromFile));
 
                 Weather weather = weatherService.getWeather(cityName, countryName);
                 List<Forecast> forecast = weatherService.getForecast(cityName, countryName);
@@ -473,8 +474,8 @@ public class MainViewController extends AbstractController{
             }
 
             if (flagCityIsCorrectR) {
-                cityManager.removeLastCityData();
-                cityManager.addCityData(new CountryAndCity(countryNameR,cityNameR));
+                cityManager2.removeLastCityData();
+                cityManager2.addCityData(new CountryAndCity(countryNameR,cityNameR));
                 secondCountryFromFile = countryNameR;
                 secondCityFromFile = cityNameR;
 
