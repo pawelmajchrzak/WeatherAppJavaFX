@@ -2,16 +2,19 @@ package com.test.controller;
 
 import com.test.CityManager;
 import com.test.controller.persistance.CountryAndCity;
+import com.test.controller.persistance.PersistenceAccess;
 import com.test.model.Forecast;
 import com.test.model.Weather;
 import com.test.model.WeatherService;
 import com.test.model.WeatherServiceFactory;
 import com.test.view.ViewFactory;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -384,8 +387,24 @@ public class MainViewController extends AbstractController{
     String secondCountryFromFile;
 
     CityManager cityManager2 = new CityManager();
+    private PersistenceAccess persistenceAccess = new PersistenceAccess();
+    List<CountryAndCity> countryAndCityList = persistenceAccess.loadFromPersistence();
+
+
     @FXML
     private void initialize() {
+
+        System.out.println(countryAndCityList.size());
+        //cityManager2.setCityData(countryAndCityList);
+        if(countryAndCityList.size() < 1) {
+            Platform.runLater(() -> {
+                Stage stage = (Stage) NowTimeHourAndMinutes.getScene().getWindow();
+                stage.close();
+                viewFactory.showWelcomeView();
+            });
+        }
+
+
         List<Text> dayAndHourTexts = List.of(forecastDayAndHour0, forecastDayAndHour1, forecastDayAndHour2, forecastDayAndHour3, forecastDayAndHour4, forecastDayAndHour5, forecastDayAndHour6, forecastDayAndHour7);
         List<Text> temperatureTexts = List.of(forecastTemperature0, forecastTemperature1, forecastTemperature2, forecastTemperature3, forecastTemperature4, forecastTemperature5, forecastTemperature6, forecastTemperature7);
         List<Text> rainTexts = List.of(forecastRain0, forecastRain1, forecastRain2, forecastRain3, forecastRain4, forecastRain5, forecastRain6, forecastRain7);
@@ -425,12 +444,12 @@ public class MainViewController extends AbstractController{
 
         if (cityManager2 != null) {
             //List<CountryAndCity> loadedCityData = cityManager.getCityData();
-            if (loadedCityData != null && !loadedCityData.isEmpty()) {
+            if (!countryAndCityList.isEmpty()) {
 
-                CountryAndCity firstCity = loadedCityData.get(0);
+                CountryAndCity firstCity = countryAndCityList.get(0);
                 countryField.setText(firstCity.getCountry());
                 cityField.setText(firstCity.getCity());
-                CountryAndCity secondCity = loadedCityData.get(1);
+                CountryAndCity secondCity = countryAndCityList.get(1);
                 countryFieldR.setText(secondCity.getCountry());
                 cityFieldR.setText(secondCity.getCity());
                 secondCountryFromFile = secondCity.getCountry();
@@ -452,19 +471,28 @@ public class MainViewController extends AbstractController{
 
             String cityName= cityField.getText();
             String countryName = countryField.getText();
+            CountryAndCity newCountryAndCity = new CountryAndCity(countryName, cityName);
 
             String cityNameR= cityFieldR.getText();
             String countryNameR = countryFieldR.getText();
+            CountryAndCity newCountryAndCity2 = new CountryAndCity(countryNameR, cityNameR);
 
             weatherService = WeatherServiceFactory.createWeatherService();
             boolean flagCityIsCorrect = isCityCorrect(cityName, countryName, errorCityLabel, errorCountryLabel);
             boolean flagCityIsCorrectR = isCityCorrect(cityNameR, countryNameR, errorCityLabelR, errorCountryLabelR);
 
             if (flagCityIsCorrect) {
-                cityManager2.removeLastCityData();
-                cityManager2.removeLastCityData();
-                cityManager2.addCityData(new CountryAndCity(countryName,cityName));
-                cityManager2.addCityData(new CountryAndCity(secondCountryFromFile,secondCityFromFile));
+                countryAndCityList.remove(1);
+                countryAndCityList.remove(0);
+                countryAndCityList.add(newCountryAndCity);
+                countryAndCityList.add(newCountryAndCity2);
+
+//                cityManager2.removeLastCityData();
+//                cityManager2.removeLastCityData();
+//                cityManager2.addCityData(new CountryAndCity(countryName,cityName));
+//                cityManager2.addCityData(new CountryAndCity(secondCountryFromFile,secondCityFromFile));
+                List<CountryAndCity> dataToSave = cityManager2.getCityData();
+                persistenceAccess.saveToPersistence(countryAndCityList);
 
                 Weather weather = weatherService.getWeather(cityName, countryName);
                 List<Forecast> forecast = weatherService.getForecast(cityName, countryName);

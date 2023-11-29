@@ -37,19 +37,19 @@ public class WelcomeViewController extends AbstractController {
 
 
     private PersistenceAccess persistenceAccess = new PersistenceAccess();
-
+    CityManager cityManager = new CityManager();
 
     @FXML
     private void initialize() {
-        List<CountryAndCity> countryAndCityList = persistenceAccess.loadFromPersistence();
-        if(countryAndCityList.size() > 0) {
-            Platform.runLater(() -> {
-                errorLabel.setText("dasdf");
-                Stage stage = (Stage) errorLabel.getScene().getWindow();
-                stage.close();
-                viewFactory.showMainView();
-            });
-        }
+//        List<CountryAndCity> countryAndCityList = persistenceAccess.loadFromPersistence();
+//        if(countryAndCityList.size() > 0) {
+//            Platform.runLater(() -> {
+//                errorLabel.setText("dasdf");
+//                Stage stage = (Stage) errorLabel.getScene().getWindow();
+//                stage.close();
+//                viewFactory.showMainView();
+//            });
+//        }
     }
     @FXML
     void checkWeatherAction() {
@@ -62,11 +62,11 @@ public class WelcomeViewController extends AbstractController {
 
         weatherService = WeatherServiceFactory.createWeatherService();
         if (fieldsAreValid()&&isCityCorrect(cityName,countryName,errorLabel)&&isCityCorrect(cityNameR,countryNameR,errorLabelR)) {
-//            cityManager.addCityData(new CountryAndCity(countryName,cityName));
-//            cityManager.addCityData(new CountryAndCity(countryNameR,cityNameR));
-//
-//            List<CountryAndCity> dataToSave = cityManager.getCityData();
-//            persistenceAccess.saveToPersistence(dataToSave);
+            cityManager.addCityData(new CountryAndCity(countryName,cityName));
+            cityManager.addCityData(new CountryAndCity(countryNameR,cityNameR));
+
+            List<CountryAndCity> dataToSave = cityManager.getCityData();
+            persistenceAccess.saveToPersistence(dataToSave);
             Stage oldStage = (Stage) cityField.getScene().getWindow();
             oldStage.close();
             viewFactory.showMainView();

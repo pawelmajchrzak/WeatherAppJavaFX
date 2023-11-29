@@ -18,12 +18,13 @@ public class App extends Application {
 
         ViewFactory viewFactory = new ViewFactory();
         //List<CountryAndCity> countryAndCityList = persistenceAccess.loadFromPersistence();
-        viewFactory.showWelcomeView();
+        viewFactory.showMainView();
 //        if(countryAndCityList.size() > 0) {
 //            viewFactory.showMainView();
 //        } else {
 //            viewFactory.showWelcomeView();
 //        }
+
     }
 
     @Override
