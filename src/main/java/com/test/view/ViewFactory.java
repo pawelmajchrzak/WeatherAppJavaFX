@@ -1,6 +1,5 @@
 package com.test.view;
 
-import com.test.CityManager;
 import com.test.controller.AbstractController;
 import com.test.controller.MainViewController;
 import com.test.controller.WelcomeViewController;
@@ -13,14 +12,6 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public class ViewFactory {
-
-    //private CityManager cityManager;
-
-//    public ViewFactory(CityManager cityManager) {
-//        this.cityManager = cityManager;
-//    }
-    public ViewFactory() {
-    }
 
     public void showMainView(){
         AbstractController controller = new MainViewController(this, "MainView.fxml");
@@ -42,8 +33,8 @@ public class ViewFactory {
             e.printStackTrace();
             return;
         }
-        Scene scene = new Scene(parent);
 
+        Scene scene = new Scene(parent);
         scene.getStylesheets().add(getClass().getResource("css/style.css").toExternalForm());
 
         Stage stage = new Stage();

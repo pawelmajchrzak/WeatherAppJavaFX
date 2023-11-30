@@ -1,6 +1,5 @@
 package com.test.controller;
 
-import com.test.CityManager;
 import com.test.controller.persistance.CountryAndCity;
 import com.test.controller.persistance.PersistenceAccess;
 import com.test.model.Forecast;
@@ -386,7 +385,6 @@ public class MainViewController extends AbstractController{
     String secondCityFromFile;
     String secondCountryFromFile;
 
-    CityManager cityManager2 = new CityManager();
     private PersistenceAccess persistenceAccess = new PersistenceAccess();
     List<CountryAndCity> countryAndCityList = persistenceAccess.loadFromPersistence();
 
@@ -394,8 +392,6 @@ public class MainViewController extends AbstractController{
     @FXML
     private void initialize() {
 
-        System.out.println(countryAndCityList.size());
-        //cityManager2.setCityData(countryAndCityList);
         if(countryAndCityList.size() < 1) {
             Platform.runLater(() -> {
                 Stage stage = (Stage) NowTimeHourAndMinutes.getScene().getWindow();
@@ -440,22 +436,18 @@ public class MainViewController extends AbstractController{
 
         weatherScreenController = new WeatherScreenController(imageViews, dayImageViews, fieldsForWeather, fieldsForWeatherR, allTextFieldsForecast, allTextFieldsForecastR);
 
-        List<CountryAndCity> loadedCityData = cityManager2.getCityData();
 
-        if (cityManager2 != null) {
-            //List<CountryAndCity> loadedCityData = cityManager.getCityData();
-            if (!countryAndCityList.isEmpty()) {
-
-                CountryAndCity firstCity = countryAndCityList.get(0);
-                countryField.setText(firstCity.getCountry());
-                cityField.setText(firstCity.getCity());
-                CountryAndCity secondCity = countryAndCityList.get(1);
-                countryFieldR.setText(secondCity.getCountry());
-                cityFieldR.setText(secondCity.getCity());
-                secondCountryFromFile = secondCity.getCountry();
-                secondCityFromFile = secondCity.getCity();
-            }
+        if (!countryAndCityList.isEmpty()) {
+            CountryAndCity firstCity = countryAndCityList.get(0);
+            countryField.setText(firstCity.getCountry());
+            cityField.setText(firstCity.getCity());
+            CountryAndCity secondCity = countryAndCityList.get(1);
+            countryFieldR.setText(secondCity.getCountry());
+            cityFieldR.setText(secondCity.getCity());
+            secondCountryFromFile = secondCity.getCountry();
+            secondCityFromFile = secondCity.getCity();
         }
+
         checkWeatherAction();
     }
 
@@ -487,11 +479,6 @@ public class MainViewController extends AbstractController{
                 countryAndCityList.add(newCountryAndCity);
                 countryAndCityList.add(newCountryAndCity2);
 
-//                cityManager2.removeLastCityData();
-//                cityManager2.removeLastCityData();
-//                cityManager2.addCityData(new CountryAndCity(countryName,cityName));
-//                cityManager2.addCityData(new CountryAndCity(secondCountryFromFile,secondCityFromFile));
-                List<CountryAndCity> dataToSave = cityManager2.getCityData();
                 persistenceAccess.saveToPersistence(countryAndCityList);
 
                 Weather weather = weatherService.getWeather(cityName, countryName);
@@ -502,8 +489,9 @@ public class MainViewController extends AbstractController{
             }
 
             if (flagCityIsCorrectR) {
-                cityManager2.removeLastCityData();
-                cityManager2.addCityData(new CountryAndCity(countryNameR,cityNameR));
+                countryAndCityList.remove(1);
+                countryAndCityList.add(newCountryAndCity2);
+
                 secondCountryFromFile = countryNameR;
                 secondCityFromFile = cityNameR;
 

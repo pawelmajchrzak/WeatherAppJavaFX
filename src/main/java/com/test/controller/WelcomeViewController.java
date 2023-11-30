@@ -1,18 +1,17 @@
 package com.test.controller;
 
-import com.test.CityManager;
+
 import com.test.controller.persistance.CountryAndCity;
 import com.test.controller.persistance.PersistenceAccess;
 import com.test.model.WeatherService;
 import com.test.model.WeatherServiceFactory;
 import com.test.view.ViewFactory;
-import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class WelcomeViewController extends AbstractController {
@@ -34,23 +33,10 @@ public class WelcomeViewController extends AbstractController {
     @FXML
     private Text errorLabelR;
 
-
+    List<CountryAndCity> countryAndCityList = new ArrayList<>();
 
     private PersistenceAccess persistenceAccess = new PersistenceAccess();
-    CityManager cityManager = new CityManager();
 
-    @FXML
-    private void initialize() {
-//        List<CountryAndCity> countryAndCityList = persistenceAccess.loadFromPersistence();
-//        if(countryAndCityList.size() > 0) {
-//            Platform.runLater(() -> {
-//                errorLabel.setText("dasdf");
-//                Stage stage = (Stage) errorLabel.getScene().getWindow();
-//                stage.close();
-//                viewFactory.showMainView();
-//            });
-//        }
-    }
     @FXML
     void checkWeatherAction() {
 
@@ -62,11 +48,14 @@ public class WelcomeViewController extends AbstractController {
 
         weatherService = WeatherServiceFactory.createWeatherService();
         if (fieldsAreValid()&&isCityCorrect(cityName,countryName,errorLabel)&&isCityCorrect(cityNameR,countryNameR,errorLabelR)) {
-            cityManager.addCityData(new CountryAndCity(countryName,cityName));
-            cityManager.addCityData(new CountryAndCity(countryNameR,cityNameR));
 
-            List<CountryAndCity> dataToSave = cityManager.getCityData();
-            persistenceAccess.saveToPersistence(dataToSave);
+            CountryAndCity newCountryAndCity = new CountryAndCity(countryName, cityName);
+            CountryAndCity newCountryAndCityR = new CountryAndCity(countryNameR, cityNameR);
+
+            countryAndCityList.add(newCountryAndCity);
+            countryAndCityList.add(newCountryAndCityR);
+
+            persistenceAccess.saveToPersistence(countryAndCityList);
             Stage oldStage = (Stage) cityField.getScene().getWindow();
             oldStage.close();
             viewFactory.showMainView();
