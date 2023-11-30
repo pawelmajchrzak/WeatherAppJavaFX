@@ -236,14 +236,8 @@
          <font>
             <Font name="System Bold" size="12.0" />
          </font></Text>
-      <Label fx:id="errorLabel" layoutX="486.0" layoutY="798.0" />
       <Label fx:id="errorCityLabel" layoutX="287.0" layoutY="68.0" prefHeight="17.0" prefWidth="191.0" />
       <Label fx:id="errorCountryLabel" layoutX="289.0" layoutY="27.0" prefHeight="17.0" prefWidth="191.0" />
-      <Label fx:id="errorLabel1" layoutX="975.0" layoutY="667.0">
-         <padding>
-            <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
-         </padding>
-      </Label>
       <Text fx:id="weatherNowTemperatureR" layoutX="750.0" layoutY="170.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Temperatura teraz">
          <font>
             <Font size="24.0" />
@@ -463,6 +457,6 @@
          </font>
       </Text>
       <Label fx:id="errorCityLabelR" layoutX="770.0" layoutY="68.0" prefHeight="17.0" prefWidth="191.0" />
-      <Label fx:id="errorCountryLabelR" layoutX="772.0" layoutY="27.0" prefHeight="17.0" prefWidth="191.0" />
+      <Label fx:id="errorCountryLabelR" prefHeight="17.0" prefWidth="191.0" />
    </children>
 </AnchorPane>

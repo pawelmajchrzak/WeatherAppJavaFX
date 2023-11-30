@@ -17,21 +17,13 @@ import java.util.List;
 public class WelcomeViewController extends AbstractController {
 
     @FXML
-    private TextField cityField;
+    private TextField cityField, countryField;
 
     @FXML
-    private TextField cityFieldR;
+    private TextField cityFieldR, countryFieldR;
 
     @FXML
-    private TextField countryField;
-
-    @FXML
-    private TextField countryFieldR;
-    @FXML
-    private Text errorLabel;
-
-    @FXML
-    private Text errorLabelR;
+    private Text errorLabel, errorLabelR;
 
     List<CountryAndCity> countryAndCityList = new ArrayList<>();
 

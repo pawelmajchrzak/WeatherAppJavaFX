@@ -22,28 +22,10 @@ import java.util.List;
 public class MainViewController extends AbstractController{
 
     @FXML
-    private Text DayOfWeek10;
+    private Text DayOfWeek8, DayOfWeek10, DayOfWeek12, DayOfWeek14;
 
     @FXML
-    private Text DayOfWeek10R;
-
-    @FXML
-    private Text DayOfWeek12;
-
-    @FXML
-    private Text DayOfWeek12R;
-
-    @FXML
-    private Text DayOfWeek14;
-
-    @FXML
-    private Text DayOfWeek14R;
-
-    @FXML
-    private Text DayOfWeek8;
-
-    @FXML
-    private Text DayOfWeek8R;
+    private Text DayOfWeek8R, DayOfWeek10R, DayOfWeek12R, DayOfWeek14R;
 
     @FXML
     private Text NowTimeHourAndMinutes;
@@ -52,322 +34,59 @@ public class MainViewController extends AbstractController{
     private Text NowTimeHourAndMinutesR;
 
     @FXML
-    private TextField cityField;
+    private TextField cityField, countryField;
 
     @FXML
-    private TextField cityFieldR;
+    private TextField cityFieldR, countryFieldR;
 
     @FXML
-    private TextField countryField;
+    private Label errorCityLabel, errorCountryLabel;
 
     @FXML
-    private TextField countryFieldR;
+    private Label errorCityLabelR, errorCountryLabelR;
 
     @FXML
-    private Label errorCityLabel;
+    private Text forecastDayAndHour0, forecastDayAndHour1, forecastDayAndHour2, forecastDayAndHour3, forecastDayAndHour4, forecastDayAndHour5, forecastDayAndHour6, forecastDayAndHour7;
 
     @FXML
-    private Label errorCityLabelR;
+    private Text forecastDayAndHour0R, forecastDayAndHour1R, forecastDayAndHour2R, forecastDayAndHour3R, forecastDayAndHour4R, forecastDayAndHour5R, forecastDayAndHour6R, forecastDayAndHour7R;
 
     @FXML
-    private Label errorCountryLabel;
+    private ImageView forecastImage0, forecastImage1, forecastImage2, forecastImage3, forecastImage4, forecastImage5, forecastImage6, forecastImage7, forecastImage9, forecastImage11, forecastImage13, forecastImage15;
 
     @FXML
-    private Label errorCountryLabelR;
+    private ImageView forecastImage0R, forecastImage1R, forecastImage2R, forecastImage3R, forecastImage4R, forecastImage5R, forecastImage6R, forecastImage7R, forecastImage9R, forecastImage11R, forecastImage13R, forecastImage15R;
 
     @FXML
-    private Label errorLabel;
+    private Text forecastRain0, forecastRain1, forecastRain2, forecastRain3, forecastRain4, forecastRain5, forecastRain6, forecastRain7;
 
     @FXML
-    private Label errorLabel1;
+    private Text forecastRain0R, forecastRain1R, forecastRain2R, forecastRain3R, forecastRain4R, forecastRain5R, forecastRain6R, forecastRain7R;
 
     @FXML
-    private Text forecastDayAndHour0;
+    private Text forecastTemperature0, forecastTemperature1, forecastTemperature2, forecastTemperature3, forecastTemperature4, forecastTemperature5, forecastTemperature6, forecastTemperature7;
 
     @FXML
-    private Text forecastDayAndHour0R;
+    private Text forecastTemperature8, forecastTemperature9, forecastTemperature10, forecastTemperature11, forecastTemperature12, forecastTemperature13, forecastTemperature14, forecastTemperature15;
 
     @FXML
-    private Text forecastDayAndHour1;
-
-    @FXML
-    private Text forecastDayAndHour1R;
-
-    @FXML
-    private Text forecastDayAndHour2;
-
-    @FXML
-    private Text forecastDayAndHour2R;
-
-    @FXML
-    private Text forecastDayAndHour3;
-
-    @FXML
-    private Text forecastDayAndHour3R;
-
-    @FXML
-    private Text forecastDayAndHour4;
-
-    @FXML
-    private Text forecastDayAndHour4R;
-
-    @FXML
-    private Text forecastDayAndHour5;
-
-    @FXML
-    private Text forecastDayAndHour5R;
-
-    @FXML
-    private Text forecastDayAndHour6;
-
-    @FXML
-    private Text forecastDayAndHour6R;
-
-    @FXML
-    private Text forecastDayAndHour7;
-
-    @FXML
-    private Text forecastDayAndHour7R;
-
-    @FXML
-    private ImageView forecastImage0;
-
-    @FXML
-    private ImageView forecastImage0R;
-
-    @FXML
-    private ImageView forecastImage1;
-
-    @FXML
-    private ImageView forecastImage11;
-
-    @FXML
-    private ImageView forecastImage11R;
-
-    @FXML
-    private ImageView forecastImage13;
-
-    @FXML
-    private ImageView forecastImage13R;
-
-    @FXML
-    private ImageView forecastImage15;
-
-    @FXML
-    private ImageView forecastImage15R;
-
-    @FXML
-    private ImageView forecastImage1R;
-
-    @FXML
-    private ImageView forecastImage2;
-
-    @FXML
-    private ImageView forecastImage2R;
-
-    @FXML
-    private ImageView forecastImage3;
-
-    @FXML
-    private ImageView forecastImage3R;
-
-    @FXML
-    private ImageView forecastImage4;
-
-    @FXML
-    private ImageView forecastImage4R;
-
-    @FXML
-    private ImageView forecastImage5;
-
-    @FXML
-    private ImageView forecastImage5R;
-
-    @FXML
-    private ImageView forecastImage6;
-
-    @FXML
-    private ImageView forecastImage6R;
-
-    @FXML
-    private ImageView forecastImage7;
-
-    @FXML
-    private ImageView forecastImage7R;
-
-    @FXML
-    private ImageView forecastImage9;
-
-    @FXML
-    private ImageView forecastImage9R;
-
-    @FXML
-    private Text forecastRain0;
-
-    @FXML
-    private Text forecastRain0R;
-
-    @FXML
-    private Text forecastRain1;
-
-    @FXML
-    private Text forecastRain1R;
-
-    @FXML
-    private Text forecastRain2;
-
-    @FXML
-    private Text forecastRain2R;
-
+    private Text forecastTemperature0R, forecastTemperature1R, forecastTemperature2R, forecastTemperature3R, forecastTemperature4R, forecastTemperature5R, forecastTemperature6R, forecastTemperature7R;
     @FXML
-    private Text forecastRain3;
+    private Text forecastTemperature8R, forecastTemperature9R, forecastTemperature10R, forecastTemperature11R, forecastTemperature12R, forecastTemperature13R, forecastTemperature14R, forecastTemperature15R;
 
     @FXML
-    private Text forecastRain3R;
+    private Text weatherNowDescription, weatherNowFeelsLike, weatherNowTemperature;
 
     @FXML
-    private Text forecastRain4;
-
-    @FXML
-    private Text forecastRain4R;
-
-    @FXML
-    private Text forecastRain5;
-
-    @FXML
-    private Text forecastRain5R;
-
-    @FXML
-    private Text forecastRain6;
-
-    @FXML
-    private Text forecastRain6R;
-
-    @FXML
-    private Text forecastRain7;
-
-    @FXML
-    private Text forecastRain7R;
-
-    @FXML
-    private Text forecastTemperature0;
-
-    @FXML
-    private Text forecastTemperature0R;
-
-    @FXML
-    private Text forecastTemperature1;
-
-    @FXML
-    private Text forecastTemperature10;
-
-    @FXML
-    private Text forecastTemperature10R;
-
-    @FXML
-    private Text forecastTemperature11;
-
-    @FXML
-    private Text forecastTemperature11R;
-
-    @FXML
-    private Text forecastTemperature12;
-
-    @FXML
-    private Text forecastTemperature12R;
-
-    @FXML
-    private Text forecastTemperature13;
-
-    @FXML
-    private Text forecastTemperature13R;
-
-    @FXML
-    private Text forecastTemperature14;
-
-    @FXML
-    private Text forecastTemperature14R;
-
-    @FXML
-    private Text forecastTemperature15;
-
-    @FXML
-    private Text forecastTemperature15R;
-
-    @FXML
-    private Text forecastTemperature1R;
-
-    @FXML
-    private Text forecastTemperature2;
-
-    @FXML
-    private Text forecastTemperature2R;
-
-    @FXML
-    private Text forecastTemperature3;
-
-    @FXML
-    private Text forecastTemperature3R;
-
-    @FXML
-    private Text forecastTemperature4;
-
-    @FXML
-    private Text forecastTemperature4R;
-
-    @FXML
-    private Text forecastTemperature5;
-
-    @FXML
-    private Text forecastTemperature5R;
-
-    @FXML
-    private Text forecastTemperature6;
-
-    @FXML
-    private Text forecastTemperature6R;
-
-    @FXML
-    private Text forecastTemperature7;
-
-    @FXML
-    private Text forecastTemperature7R;
-
-    @FXML
-    private Text forecastTemperature8;
-
-    @FXML
-    private Text forecastTemperature8R;
-
-    @FXML
-    private Text forecastTemperature9;
-
-    @FXML
-    private Text forecastTemperature9R;
-
-    @FXML
-    private Text weatherNowDescription;
-
-    @FXML
-    private Text weatherNowDescriptionR;
-
-    @FXML
-    private Text weatherNowFeelsLike;
-
-    @FXML
-    private Text weatherNowFeelsLikeR;
-
+    private Text weatherNowDescriptionR, weatherNowFeelsLikeR, weatherNowTemperatureR;
+    
     @FXML
     private ImageView weatherNowImage;
 
     @FXML
     private ImageView weatherNowImageR;
 
-    @FXML
-    private Text weatherNowTemperature;
 
-    @FXML
-    private Text weatherNowTemperatureR;
 
     private List<ImageView> imageViews;
     private List<ImageView> dayImageViews;
