@@ -1,8 +1,6 @@
 package com.test.view;
 
-import com.test.controller.AbstractController;
-import com.test.controller.MainViewController;
-import com.test.controller.WelcomeViewController;
+import com.test.controller.*;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -20,6 +18,16 @@ public class ViewFactory {
 
     public void showWelcomeView(){
         AbstractController controller = new WelcomeViewController(this, "WelcomeView.fxml");
+        initializeStage(controller);
+    }
+
+//    public void showNestedView(){
+//        AbstractController controller = new NestedController(this, "nestedView.fxml");
+//        initializeStage(controller);
+//    }
+
+    public void testView(){
+        AbstractController controller = new TestController(this, "test.fxml");
         initializeStage(controller);
     }
 
