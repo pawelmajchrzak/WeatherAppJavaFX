@@ -18,7 +18,11 @@ public class WeatherService {
         return weatherClient.isCityAndCountryValid(cityName, countryName);
     }
 
-    public List<Forecast> getForecast(String cityName, String countryName) {
-        return weatherClient.getForecast(cityName, countryName);
+    public List<Weather> getForecastHourly(String cityName, String countryName) {
+        return weatherClient.getForecastHourly(cityName, countryName);
+    }
+
+    public List<Weather> getForecastDaily(String cityName, String countryName) {
+        return weatherClient.getForecastDaily(cityName, countryName);
     }
 }

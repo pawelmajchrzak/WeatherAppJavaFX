@@ -21,16 +21,6 @@ public class ViewFactory {
         initializeStage(controller);
     }
 
-//    public void showNestedView(){
-//        AbstractController controller = new NestedController(this, "nestedView.fxml");
-//        initializeStage(controller);
-//    }
-
-    public void testView(){
-        AbstractController controller = new TestController(this, "test.fxml");
-        initializeStage(controller);
-    }
-
     public void initializeStage(AbstractController abstractController) {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(abstractController.getFxmlName()));
         fxmlLoader.setController(abstractController);

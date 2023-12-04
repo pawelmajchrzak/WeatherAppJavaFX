@@ -14,12 +14,12 @@
 
          <!-- Lewa strona -->
          <AnchorPane>
-            <fx:include fx:id="leftNested" source="nestedView.fxml"/>
+            <fx:include fx:id="leftNested" source="NestedView.fxml"/>
          </AnchorPane>
 
          <!-- Prawa strona -->
          <AnchorPane>
-            <fx:include fx:id="rightNested" source="nestedView.fxml"/>
+            <fx:include fx:id="rightNested" source="NestedView.fxml"/>
          </AnchorPane>
 
       </SplitPane>

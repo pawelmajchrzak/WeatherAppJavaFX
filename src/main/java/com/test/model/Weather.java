@@ -2,29 +2,44 @@ package com.test.model;
 
 public class Weather {
 
-    private final double currentTemperature;
-    private final String time;
-    private final String iconWeatherCode;
-    private final String cityName;
-    private final String descriptionWeather;
+    private double temperature;
+    private String dateTime;
+    private String iconWeatherCode;
+    private String cityName;
+    private String descriptionWeather;
+    private double feelsLikeTemperature;
+    private double probabilityRain;
+    private String temperatureNight;
 
-    private final double feelsLikeTemperature;
-
-    public Weather(double currentTemperature, String time, String iconWeatherCode, String descriptionWeather, double feelsLikeTemperature, String cityName) {
-        this.currentTemperature = currentTemperature;
-        this.time = time;
+    public Weather(double temperature, String dateTime, String iconWeatherCode, String descriptionWeather, double feelsLikeTemperature, String cityName) {
+        this.temperature = temperature;
+        this.dateTime = dateTime;
         this.iconWeatherCode = iconWeatherCode;
         this.descriptionWeather = descriptionWeather;
         this.feelsLikeTemperature = feelsLikeTemperature;
         this.cityName = cityName;
     }
 
-    public double getCurrentTemperature() {
-        return currentTemperature;
+    public Weather(double temperature, String dateTime, String iconWeatherCode, double probabilityRain) {
+        this.temperature = temperature;
+        this.dateTime = dateTime;
+        this.iconWeatherCode = iconWeatherCode;
+        this.probabilityRain = probabilityRain;
     }
 
-    public String getTime() {
-        return time;
+    public Weather(double temperature, String dateTime, String iconWeatherCode, String temperatureNight) {
+        this.temperature = temperature;
+        this.dateTime = dateTime;
+        this.iconWeatherCode = iconWeatherCode;
+        this.temperatureNight = temperatureNight;
+    }
+
+    public double getTemperature() {
+        return temperature;
+    }
+
+    public String getDateTime() {
+        return dateTime;
     }
 
     public String getIconWeatherCode() {
@@ -41,5 +56,8 @@ public class Weather {
 
     public String getCityName() {
         return cityName;
+    }
+    public double getProbabilityRain() {
+        return probabilityRain;
     }
 }
