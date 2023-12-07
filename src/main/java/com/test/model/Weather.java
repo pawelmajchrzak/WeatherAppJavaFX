@@ -9,7 +9,10 @@ public class Weather {
     private String descriptionWeather;
     private double feelsLikeTemperature;
     private double probabilityRain;
-    private String temperatureNight;
+
+
+
+    private double temperatureNight;
 
     public Weather(double temperature, String dateTime, String iconWeatherCode, String descriptionWeather, double feelsLikeTemperature, String cityName) {
         this.temperature = temperature;
@@ -27,7 +30,7 @@ public class Weather {
         this.probabilityRain = probabilityRain;
     }
 
-    public Weather(double temperature, String dateTime, String iconWeatherCode, String temperatureNight) {
+    public Weather(double temperature, double temperatureNight, String dateTime, String iconWeatherCode) {
         this.temperature = temperature;
         this.dateTime = dateTime;
         this.iconWeatherCode = iconWeatherCode;
@@ -59,5 +62,8 @@ public class Weather {
     }
     public double getProbabilityRain() {
         return probabilityRain;
+    }
+    public double getTemperatureNight() {
+        return temperatureNight;
     }
 }

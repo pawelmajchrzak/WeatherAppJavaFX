@@ -9,7 +9,7 @@ public class WeatherServiceFactory {
     public static WeatherService createWeatherService() {
         return new WeatherService(createWeatherClient());
     }
-    private static WeatherClient createWeatherClient() {
+    public static WeatherClient createWeatherClient() {
         RestTemplate restTemplate = new RestTemplate();
         ObjectMapper objectMapper = new ObjectMapper();
         return new OpenWeatherMapClient(restTemplate,objectMapper);

@@ -5,8 +5,10 @@ import com.test.controller.persistance.CountryAndCity;
 import com.test.controller.persistance.PersistenceAccess;
 import com.test.model.WeatherService;
 import com.test.model.WeatherServiceFactory;
+import com.test.model.client.WeatherClient;
 import com.test.view.ViewFactory;
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -23,7 +25,7 @@ public class WelcomeViewController extends AbstractController {
     private TextField cityFieldR, countryFieldR;
 
     @FXML
-    private Text errorLabel, errorLabelR;
+    private Label errorLabel, errorLabelR;
 
     List<CountryAndCity> countryAndCityList = new ArrayList<>();
 
@@ -38,8 +40,21 @@ public class WelcomeViewController extends AbstractController {
         String cityNameR= cityFieldR.getText();
         String countryNameR = countryFieldR.getText();
 
-        weatherService = WeatherServiceFactory.createWeatherService();
-        if (fieldsAreValid()&&isCityCorrect(cityName,countryName,errorLabel)&&isCityCorrect(cityNameR,countryNameR,errorLabelR)) {
+        boolean flagCityIsCorrect = true;
+
+        if (!ValidationUtils.areFieldsValid(cityName,countryName,errorLabel)) {
+            flagCityIsCorrect = false;
+        } else if (!ValidationUtils.isCityCorrect(cityName,countryName,errorLabel)) {
+            flagCityIsCorrect = false;
+        }
+
+        if (!ValidationUtils.areFieldsValid(cityNameR,countryNameR,errorLabelR)) {
+            flagCityIsCorrect = false;
+        } else if (!ValidationUtils.isCityCorrect(cityNameR,countryNameR,errorLabelR)) {
+            flagCityIsCorrect = false;
+        }
+
+        if (flagCityIsCorrect) {
 
             CountryAndCity newCountryAndCity = new CountryAndCity(countryName, cityName);
             CountryAndCity newCountryAndCityR = new CountryAndCity(countryNameR, cityNameR);
@@ -55,43 +70,7 @@ public class WelcomeViewController extends AbstractController {
 
     }
 
-    WeatherService weatherService;
-
-    private boolean isCityCorrect(String cityName, String countryName, Text errorLabel) {
-            if (weatherService.isCityAndCountryValid(cityName, countryName)) {
-                errorLabel.setText("");
-                return true;
-            } else {
-                errorLabel.setText("Dane dla podanego miasta nie są dostępne ");
-            }
-            return false;
-    }
     public WelcomeViewController(ViewFactory viewFactory, String fxmlName) {
         super(viewFactory, fxmlName);
     }
-
-    private boolean fieldsAreValid() {
-        if(countryField.getText().isEmpty()) {
-            errorLabel.setText("Proszę wpisać państwo!");
-            return  false;
-        } else if (cityField.getText().isEmpty()){
-            errorLabel.setText("Proszę wpisać miasto!");
-            return  false;
-        } else {
-            errorLabel.setText("");
-        }
-
-        if(countryFieldR.getText().isEmpty()) {
-            errorLabelR.setText("Proszę wpisać państwo!");
-            return  false;
-        } else if (cityFieldR.getText().isEmpty()){
-            errorLabelR.setText("Proszę wpisać miasto!");
-            return  false;
-        } else {
-            errorLabelR.setText("");
-        }
-
-        return  true;
-    }
-
 }

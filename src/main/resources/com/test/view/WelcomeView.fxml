@@ -8,7 +8,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #d7eaf5;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #d7eaf5;" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <Label layoutX="50.0" layoutY="221.0" text="Państwo:" />
       <Label layoutX="50.0" layoutY="255.0" text="Miasto:" />
@@ -40,7 +40,7 @@
             <Font size="14.0" />
          </font>
       </Text>
-      <Text fx:id="errorLabel" layoutX="28.0" layoutY="305.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="263.13671875" />
-      <Text fx:id="errorLabelR" layoutX="310.0" layoutY="304.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="275.13671875" />
+      <Label fx:id="errorLabel" layoutX="47.0" layoutY="282.0" prefHeight="44.0" prefWidth="218.0" textAlignment="CENTER" wrapText="true" />
+      <Label fx:id="errorLabelR" layoutX="328.0" layoutY="282.0" prefHeight="44.0" prefWidth="218.0" textAlignment="CENTER" wrapText="true" />
    </children>
 </AnchorPane>
