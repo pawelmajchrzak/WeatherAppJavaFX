@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane prefHeight="558.0" prefWidth="368.0" style="-fx-background-color: #d7eaf5;" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.test.controller.NestedController">
+    <children>
+        <Label layoutX="37.0" layoutY="27.0" prefHeight="17.0" prefWidth="64.0" text="Państwo:" />
+        <Label layoutX="37.0" layoutY="68.0" prefHeight="17.0" prefWidth="64.0" text="Miasto:" />
+        <TextField fx:id="countryField" layoutX="101.0" layoutY="23.0" prefHeight="25.0" prefWidth="170.0" />
+        <TextField fx:id="cityField" layoutX="100.0" layoutY="64.0" prefHeight="25.0" prefWidth="170.0" />
+        <Text fx:id="weatherNowTemperature" layoutX="239.0" layoutY="170.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Temperatura teraz">
+            <font>
+                <Font size="24.0" />
+            </font></Text>
+        <Text fx:id="NowTimeHourAndMinutes" layoutX="36.0" layoutY="129.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Teraz GG:MM" textAlignment="CENTER" wrappingWidth="400.0" />
+        <ImageView fx:id="weatherNowImage" fitHeight="91.0" fitWidth="104.0" layoutX="100.0" layoutY="144.0" pickOnBounds="true" preserveRatio="true" />
+        <Text fx:id="weatherNowFeelsLike" layoutX="238.0" layoutY="202.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Temperatura odczuwalna" />
+        <Line endX="200.0" layoutX="247.0" layoutY="103.0" startX="-223.0" />
+        <Line endX="200.0" layoutX="247.0" layoutY="246.0" startX="-223.0" />
+        <Text fx:id="weatherNowDescription" layoutX="237.0" layoutY="230.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Opis pogody" />
+        <Text layoutX="183.0" layoutY="267.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Prognoza godzinowa" textAlignment="CENTER">
+            <font>
+                <Font name="System Bold" size="12.0" />
+            </font></Text>
+        <Line endX="200.0" layoutX="250.0" layoutY="630.0" startX="-223.0" />
+        <VBox layoutX="25.0" layoutY="279.0" prefHeight="158.0" prefWidth="100.0" style="-fx-background-color: #bbddf0;" AnchorPane.leftAnchor="25.0">
+            <children>
+                <Text fx:id="forecastDayAndHour0" strokeType="OUTSIDE" strokeWidth="0.0" text="Dzień Godzina" textAlignment="CENTER" wrappingWidth="100.0" />
+                <ImageView fx:id="forecastImage0" fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" />
+                <Text fx:id="forecastTemperature0" strokeType="OUTSIDE" strokeWidth="0.0" text="Temperatura" textAlignment="CENTER" wrappingWidth="100.0" />
+                <Text fx:id="forecastRain0" strokeType="OUTSIDE" strokeWidth="0.0" text="Opady" textAlignment="CENTER" wrappingWidth="100.0" />
+            </children>
+            <padding>
+                <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+            </padding>
+        </VBox>
+        <VBox layoutX="135.0" layoutY="279.0" prefHeight="158.0" prefWidth="100.0" style="-fx-background-color: #bbddf0;" AnchorPane.leftAnchor="135.0">
+            <children>
+                <Text fx:id="forecastDayAndHour1" strokeType="OUTSIDE" strokeWidth="0.0" text="Dzień Godzina" textAlignment="CENTER" wrappingWidth="100.0" />
+                <ImageView fx:id="forecastImage1" fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" />
+                <Text fx:id="forecastTemperature1" strokeType="OUTSIDE" strokeWidth="0.0" text="Temperatura" textAlignment="CENTER" wrappingWidth="100.0" />
+                <Text fx:id="forecastRain1" strokeType="OUTSIDE" strokeWidth="0.0" text="Opady" textAlignment="CENTER" wrappingWidth="100.0" />
+            </children>
+            <padding>
+                <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+            </padding>
+        </VBox>
+        <VBox layoutX="245.0" layoutY="279.0" prefHeight="158.0" prefWidth="100.0" style="-fx-background-color: #bbddf0;" AnchorPane.leftAnchor="245.0">
+            <children>
+                <Text fx:id="forecastDayAndHour2" strokeType="OUTSIDE" strokeWidth="0.0" text="Dzień Godzina" textAlignment="CENTER" wrappingWidth="100.0" />
+                <ImageView fx:id="forecastImage2" fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" />
+                <Text fx:id="forecastTemperature2" strokeType="OUTSIDE" strokeWidth="0.0" text="Temperatura" textAlignment="CENTER" wrappingWidth="100.0" />
+                <Text fx:id="forecastRain2" strokeType="OUTSIDE" strokeWidth="0.0" text="Opady" textAlignment="CENTER" wrappingWidth="100.0" />
+            </children>
+            <padding>
+                <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+            </padding>
+        </VBox>
+        <VBox layoutX="355.0" layoutY="279.0" prefHeight="158.0" prefWidth="100.0" style="-fx-background-color: #bbddf0;" AnchorPane.leftAnchor="355.0">
+            <children>
+                <Text fx:id="forecastDayAndHour3" strokeType="OUTSIDE" strokeWidth="0.0" text="Dzień Godzina" textAlignment="CENTER" wrappingWidth="100.0" />
+                <ImageView fx:id="forecastImage3" fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" />
+                <Text fx:id="forecastTemperature3" strokeType="OUTSIDE" strokeWidth="0.0" text="Temperatura" textAlignment="CENTER" wrappingWidth="100.0" />
+                <Text fx:id="forecastRain3" strokeType="OUTSIDE" strokeWidth="0.0" text="Opady" textAlignment="CENTER" wrappingWidth="100.0" />
+            </children>
+            <padding>
+                <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+            </padding>
+        </VBox>
+        <VBox layoutX="25.0" layoutY="456.0" prefHeight="158.0" prefWidth="100.0" style="-fx-background-color: #bbddf0;" AnchorPane.leftAnchor="25.0">
+            <children>
+                <Text fx:id="forecastDayAndHour4" strokeType="OUTSIDE" strokeWidth="0.0" text="Dzień Godzina" textAlignment="CENTER" wrappingWidth="100.0" />
+                <ImageView fx:id="forecastImage4" fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" />
+                <Text fx:id="forecastTemperature4" strokeType="OUTSIDE" strokeWidth="0.0" text="Temperatura" textAlignment="CENTER" wrappingWidth="100.0" />
+                <Text fx:id="forecastRain4" strokeType="OUTSIDE" strokeWidth="0.0" text="Opady" textAlignment="CENTER" wrappingWidth="100.0" />
+            </children>
+            <padding>
+                <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+            </padding>
+        </VBox>
+        <VBox layoutX="135.0" layoutY="456.0" prefHeight="158.0" prefWidth="100.0" style="-fx-background-color: #bbddf0;" AnchorPane.leftAnchor="135.0">
+            <children>
+                <Text fx:id="forecastDayAndHour5" strokeType="OUTSIDE" strokeWidth="0.0" text="Dzień Godzina" textAlignment="CENTER" wrappingWidth="100.0" />
+                <ImageView fx:id="forecastImage5" fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" />
+                <Text fx:id="forecastTemperature5" strokeType="OUTSIDE" strokeWidth="0.0" text="Temperatura" textAlignment="CENTER" wrappingWidth="100.0" />
+                <Text fx:id="forecastRain5" strokeType="OUTSIDE" strokeWidth="0.0" text="Opady" textAlignment="CENTER" wrappingWidth="100.0" />
+            </children>
+            <padding>
+                <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+            </padding>
+        </VBox>
+        <VBox layoutX="245.0" layoutY="456.0" prefHeight="158.0" prefWidth="100.0" style="-fx-background-color: #bbddf0;" AnchorPane.leftAnchor="245.0">
+            <children>
+                <Text fx:id="forecastDayAndHour6" strokeType="OUTSIDE" strokeWidth="0.0" text="Dzień Godzina" textAlignment="CENTER" wrappingWidth="100.0" />
+                <ImageView fx:id="forecastImage6" fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" />
+                <Text fx:id="forecastTemperature6" strokeType="OUTSIDE" strokeWidth="0.0" text="Temperatura" textAlignment="CENTER" wrappingWidth="100.0" />
+                <Text fx:id="forecastRain6" strokeType="OUTSIDE" strokeWidth="0.0" text="Opady" textAlignment="CENTER" wrappingWidth="100.0" />
+            </children>
+            <padding>
+                <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+            </padding>
+        </VBox>
+        <VBox layoutX="355.0" layoutY="456.0" prefHeight="158.0" prefWidth="100.0" style="-fx-background-color: #bbddf0;" AnchorPane.leftAnchor="355.0">
+            <children>
+                <Text fx:id="forecastDayAndHour7" strokeType="OUTSIDE" strokeWidth="0.0" text="Dzień Godzina" textAlignment="CENTER" wrappingWidth="100.0" />
+                <ImageView fx:id="forecastImage7" fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" />
+                <Text fx:id="forecastTemperature7" strokeType="OUTSIDE" strokeWidth="0.0" text="Temperatura" textAlignment="CENTER" wrappingWidth="100.0" />
+                <Text fx:id="forecastRain7" strokeType="OUTSIDE" strokeWidth="0.0" text="Opady" textAlignment="CENTER" wrappingWidth="100.0" />
+            </children>
+            <padding>
+                <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+            </padding>
+        </VBox>
+        <VBox layoutX="29.0" layoutY="662.0" prefHeight="43.0" prefWidth="100.0" style="-fx-background-color: #bbddf0;" AnchorPane.leftAnchor="29.0">
+            <children>
+                <Text fx:id="DayOfWeek8" strokeType="OUTSIDE" strokeWidth="0.0" text="Dzień Godzina" textAlignment="CENTER" wrappingWidth="100.0" />
+                <HBox prefHeight="100.0" prefWidth="200.0">
+                    <children>
+                        <ImageView fx:id="forecastImage9" fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" />
+                        <VBox prefHeight="200.0" prefWidth="100.0">
+                            <children>
+                                <Text fx:id="forecastTemperature9" strokeType="OUTSIDE" strokeWidth="0.0" text="TempD" textAlignment="CENTER" wrappingWidth="50.0">
+                                    <VBox.margin>
+                                        <Insets top="3.0" />
+                                    </VBox.margin></Text>
+                                <Text fx:id="forecastTemperature8" strokeType="OUTSIDE" strokeWidth="0.0" text="TempN" textAlignment="CENTER" wrappingWidth="50.0">
+                                    <VBox.margin>
+                                        <Insets top="6.0" />
+                                    </VBox.margin></Text>
+                            </children>
+                        </VBox>
+                    </children>
+                </HBox>
+            </children>
+            <padding>
+                <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+            </padding>
+        </VBox>
+        <VBox layoutX="140.0" layoutY="662.0" prefHeight="43.0" prefWidth="100.0" style="-fx-background-color: #bbddf0;" AnchorPane.leftAnchor="140.0">
+            <children>
+                <Text fx:id="DayOfWeek10" strokeType="OUTSIDE" strokeWidth="0.0" text="Dzień Godzina" textAlignment="CENTER" wrappingWidth="100.0" />
+                <HBox prefHeight="100.0" prefWidth="200.0">
+                    <children>
+                        <ImageView fx:id="forecastImage11" fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" />
+                        <VBox prefHeight="200.0" prefWidth="100.0">
+                            <children>
+                                <Text fx:id="forecastTemperature11" strokeType="OUTSIDE" strokeWidth="0.0" text="TempD" textAlignment="CENTER" wrappingWidth="50.0">
+                                    <VBox.margin>
+                                        <Insets top="3.0" />
+                                    </VBox.margin></Text>
+                                <Text fx:id="forecastTemperature10" strokeType="OUTSIDE" strokeWidth="0.0" text="TempN" textAlignment="CENTER" wrappingWidth="50.0">
+                                    <VBox.margin>
+                                        <Insets top="6.0" />
+                                    </VBox.margin></Text>
+                            </children>
+                        </VBox>
+                    </children>
+                </HBox>
+            </children>
+            <padding>
+                <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+            </padding>
+        </VBox>
+        <VBox layoutX="250.0" layoutY="662.0" prefHeight="43.0" prefWidth="100.0" style="-fx-background-color: #bbddf0;" AnchorPane.leftAnchor="250.0">
+            <children>
+                <Text fx:id="DayOfWeek12" strokeType="OUTSIDE" strokeWidth="0.0" text="Dzień Godzina" textAlignment="CENTER" wrappingWidth="100.0" />
+                <HBox prefHeight="100.0" prefWidth="200.0">
+                    <children>
+                        <ImageView fx:id="forecastImage13" fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" />
+                        <VBox prefHeight="200.0" prefWidth="100.0">
+                            <children>
+                                <Text fx:id="forecastTemperature13" strokeType="OUTSIDE" strokeWidth="0.0" text="TempD" textAlignment="CENTER" wrappingWidth="50.0">
+                                    <VBox.margin>
+                                        <Insets top="3.0" />
+                                    </VBox.margin></Text>
+                                <Text fx:id="forecastTemperature12" strokeType="OUTSIDE" strokeWidth="0.0" text="TempN" textAlignment="CENTER" wrappingWidth="50.0">
+                                    <VBox.margin>
+                                        <Insets top="6.0" />
+                                    </VBox.margin></Text>
+                            </children>
+                        </VBox>
+                    </children>
+                </HBox>
+            </children>
+            <padding>
+                <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+            </padding>
+        </VBox>
+        <VBox layoutX="362.0" layoutY="662.0" prefHeight="43.0" prefWidth="100.0" style="-fx-background-color: #bbddf0;" AnchorPane.leftAnchor="362.0">
+            <children>
+                <Text fx:id="DayOfWeek14" strokeType="OUTSIDE" strokeWidth="0.0" text="Dzień Godzina" textAlignment="CENTER" wrappingWidth="100.0" />
+                <HBox prefHeight="100.0" prefWidth="200.0">
+                    <children>
+                        <ImageView fx:id="forecastImage15" fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" />
+                        <VBox prefHeight="200.0" prefWidth="100.0">
+                            <children>
+                                <Text fx:id="forecastTemperature15" strokeType="OUTSIDE" strokeWidth="0.0" text="TempD" textAlignment="CENTER" wrappingWidth="50.0">
+                                    <VBox.margin>
+                                        <Insets top="3.0" />
+                                    </VBox.margin></Text>
+                                <Text fx:id="forecastTemperature14" strokeType="OUTSIDE" strokeWidth="0.0" text="TempN" textAlignment="CENTER" wrappingWidth="50.0">
+                                    <VBox.margin>
+                                        <Insets top="6.0" />
+                                    </VBox.margin></Text>
+                            </children>
+                        </VBox>
+                    </children>
+                </HBox>
+            </children>
+            <padding>
+                <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+            </padding>
+        </VBox>
+        <Text layoutX="199.0" layoutY="651.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Prognoza dniowa" textAlignment="CENTER">
+            <font>
+                <Font name="System Bold" size="12.0" />
+            </font></Text>
+        <Label fx:id="errorLabel" layoutX="286.0" layoutY="23.0" prefHeight="71.0" prefWidth="152.0" wrapText="true" />
+<!--      <Button layoutX="81.0" layoutY="132.0" mnemonicParsing="false" onAction="#check" text="Button" />-->
+
+    </children>
+</AnchorPane>

@@ -2,44 +2,44 @@ package com.test.model.client;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.test.model.Forecast;
 import com.test.model.Weather;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
-
 import java.io.IOException;
 import java.time.DayOfWeek;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 
 public class OpenWeatherMapClient implements WeatherClient{
 
-    private RestTemplate restTemplate = new RestTemplate();
+    private final RestTemplate restTemplate;
+    ObjectMapper objectMapper;
     private static final String WEATHER_URL = "https://api.openweathermap.org/data/2.5/";
-    private double temperature;
-    private String iconWeatherCode;
-    private String descriptionWeather;
-    private double feelsLikeTemperature;
-    private String hourAndMinutes;
-    private double probabilityRain;
-    private String forecastDateTime;
 
+    public OpenWeatherMapClient(RestTemplate restTemplate, ObjectMapper objectMapper) {
+        this.restTemplate = restTemplate;
+        this.objectMapper = objectMapper;
+    }
 
     @Override
     public Weather getWeather(String cityName, String countryName) {
-        String countryCode = getCountryCode(countryName);
-        LocalDateTime currentTime = LocalDateTime.now();
-        DateTimeFormatter timeFormat = DateTimeFormatter.ofPattern("HH:mm");
-        hourAndMinutes = currentTime.format(timeFormat);
+        double temperature=0;
+        String hourAndMinutes;
+        String iconWeatherCode="";
+        String descriptionWeather="";
+        double feelsLikeTemperature=0;
+        String weatherNow = null;
 
-        ResponseEntity<String> weatherNow = callGetMethod("weather",cityName,countryCode,Config.API_KEY);
-        ObjectMapper objectMapper = new ObjectMapper();
+        String countryCode = getCountryCode(countryName);
+        DateTimeFormatter timeFormat = DateTimeFormatter.ofPattern("HH:mm");
+        hourAndMinutes = LocalDateTime.now().format(timeFormat);
+
         try {
-            JsonNode jsonNode = objectMapper.readTree(weatherNow.getBody());
+            weatherNow = callGetMethod(String.class,"weather",cityName,countryCode,Config.API_KEY);
+            JsonNode jsonNode = objectMapper.readTree(weatherNow);
             descriptionWeather = jsonNode.get("weather").get(0).get("description").asText();
             iconWeatherCode = jsonNode.get("weather").get(0).get("icon").asText();
             temperature = jsonNode.get("main").get("temp").asDouble();
@@ -50,42 +50,62 @@ public class OpenWeatherMapClient implements WeatherClient{
         return new Weather(temperature, hourAndMinutes, iconWeatherCode, descriptionWeather, feelsLikeTemperature,cityName);
     }
     @Override
-    public List<Forecast> getForecast(String cityName, String countryName) {
+    public List<Weather> getForecastHourly(String cityName, String countryName) {
+        double temperature;
+        String forecastDateTime;
+        String iconWeatherCode;
+        double probabilityRain;
+        String weatherForecast=null;
+
         String countryCode = getCountryCode(countryName);
-        LocalDateTime currentTime = LocalDateTime.now();
-
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        String[] formattedDateTimes = new String[5];
-
-        for (int i = 0; i < 5; i++) {
-            formattedDateTimes[i] = currentTime.format(formatter);
-            currentTime = currentTime.plusDays(1);
-        }
-
-        ResponseEntity<String> weatherForecast = callGetMethod("forecast",cityName,countryCode,Config.API_KEY);
-        ObjectMapper objectMapperForecast = new ObjectMapper();
-        List<Forecast> forecastList = new ArrayList<>();
+        List<Weather> forecastList = new ArrayList<>();
 
         try {
-            JsonNode jsonNode = objectMapperForecast.readTree(weatherForecast.getBody());
+            weatherForecast = callGetMethod(String.class,"forecast",cityName,countryCode,Config.API_KEY);
+            JsonNode jsonNode = objectMapper.readTree(weatherForecast);
             for (int i =0; i<8; i++) {
                 JsonNode forecastNode = jsonNode.get("list").get(i);
                 temperature = Math.round(forecastNode.get("main").get("temp").asDouble());
                 iconWeatherCode = forecastNode.get("weather").get(0).get("icon").asText();
                 probabilityRain = Math.round(forecastNode.get("pop").asDouble()*100);
                 forecastDateTime = formatWithTodayYesterdayHourAndMinutes(forecastNode.get("dt_txt").asText());
-                forecastList.add(new Forecast(temperature, forecastDateTime, iconWeatherCode, probabilityRain));
+                forecastList.add(new Weather(temperature, forecastDateTime, iconWeatherCode, probabilityRain));
             }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return forecastList;
+    }
 
-            for (JsonNode forecastNode : jsonNode.get("list")) {
-                forecastDateTime = forecastNode.get("dt_txt").asText();
-                String polishDayOfWeekName = dayOfWeekFromDateTime(forecastDateTime);
+    @Override
+    public List<Weather> getForecastDaily(String cityName, String countryName) {
+        double temperature;
+        double temperatureNight;
+        String dateTime;
+        String iconWeatherCode;
+        String weatherForecast;
 
-                if (isNextDaysForecast(forecastDateTime, formattedDateTimes) && (forecastDateTime.contains("03:00:00") || forecastDateTime.contains("15:00:00"))) {
-                    temperature = Math.round(forecastNode.get("main").get("temp").asDouble());
-                    iconWeatherCode = forecastNode.get("weather").get(0).get("icon").asText();
-                    probabilityRain = Math.round(forecastNode.get("pop").asDouble()*100);
-                    forecastList.add(new Forecast(temperature, polishDayOfWeekName, iconWeatherCode, probabilityRain));
+        String countryCode = getCountryCode(countryName);
+        String[] formattedDateTimes = generateFormattedDates(4);
+        List<Weather> forecastList = new ArrayList<>();
+
+        try {
+            weatherForecast = callGetMethod(String.class,"forecast",cityName,countryCode,Config.API_KEY);
+            JsonNode jsonNode = objectMapper.readTree(weatherForecast);
+            Iterator<JsonNode> forecastNodeIterator = jsonNode.get("list").iterator();
+
+            while (forecastNodeIterator.hasNext()) {
+                JsonNode currentForecastNode = forecastNodeIterator.next();
+                dateTime = currentForecastNode.get("dt_txt").asText();
+                String polishDayOfWeekName = dayOfWeekFromDateTime(dateTime);
+                if (isNextDaysForecast(dateTime, formattedDateTimes) && (dateTime.contains("03:00:00"))) {
+                    temperatureNight = Math.round(currentForecastNode.get("main").get("temp").asDouble());
+                    for (int i = 0; i < 4 && forecastNodeIterator.hasNext(); i++) {
+                        currentForecastNode = forecastNodeIterator.next();
+                    }
+                    temperature = Math.round(currentForecastNode.get("main").get("temp").asDouble());
+                    iconWeatherCode = currentForecastNode.get("weather").get(0).get("icon").asText();
+                    forecastList.add(new Weather(temperature, temperatureNight, polishDayOfWeekName, iconWeatherCode));
                 }
             }
         } catch (IOException e) {
@@ -98,8 +118,8 @@ public class OpenWeatherMapClient implements WeatherClient{
     public boolean isCityAndCountryValid(String cityName, String countryName) {
         String countryCode = getCountryCode(countryName);
         try {
-            ResponseEntity<String> response = callGetMethod("weather", cityName, countryCode, Config.API_KEY);
-            return response.getStatusCode() == HttpStatus.OK;
+            String responseBody = callGetMethod(String.class,"weather", cityName, countryCode, Config.API_KEY);
+            return true;
         } catch (Exception e) {
             e.printStackTrace();
             return false;
@@ -113,9 +133,9 @@ public class OpenWeatherMapClient implements WeatherClient{
         return PolishDayOfWeekConverter.convertToPolish(dayOfWeekName);
     }
 
-    private ResponseEntity<String> callGetMethod (Object...objects) {
-        return restTemplate.getForEntity(WEATHER_URL + "{typeOfWeather}?q={cityName},{countryCode}&appid={apiKey}&units=metric&lang=pl",
-                String.class, objects);
+    private <T> T callGetMethod (Class <T> responseType,Object...objects) {
+        return restTemplate.getForObject(WEATHER_URL + "{typeOfWeather}?q={cityName},{countryCode}&appid={apiKey}&units=metric&lang=pl",
+                responseType, objects);
     }
 
     public static String formatWithTodayYesterdayHourAndMinutes(String dateTime) {
@@ -151,5 +171,17 @@ public class OpenWeatherMapClient implements WeatherClient{
         return null;
     }
 
+    private String[] generateFormattedDates(int days) {
+        LocalDateTime currentTime = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        String[] formattedDateTimes = new String[days];
+
+        for (int i = 0; i < days; i++) {
+            currentTime = currentTime.plusDays(1);
+            formattedDateTimes[i] = currentTime.format(formatter);
+        }
+
+        return formattedDateTimes;
+    }
 
 }

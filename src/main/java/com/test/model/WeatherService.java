@@ -11,14 +11,8 @@ public class WeatherService {
         this.weatherClient = weatherClient;
     }
 
-    public Weather getWeather(String cityName, String countryName) {
-        return weatherClient.getWeather(cityName, countryName);
-    }
-    public boolean isCityAndCountryValid(String cityName, String countryName) {
-        return weatherClient.isCityAndCountryValid(cityName, countryName);
+    public WeatherClient getWeatherClient() {
+        return weatherClient;
     }
 
-    public List<Forecast> getForecast(String cityName, String countryName) {
-        return weatherClient.getForecast(cityName, countryName);
-    }
 }
