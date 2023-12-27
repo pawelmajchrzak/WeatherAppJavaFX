@@ -66,4 +66,6 @@ public class Weather {
     public double getTemperatureNight() {
         return temperatureNight;
     }
+
+
 }

@@ -91,6 +91,7 @@ public class OpenWeatherMapClient implements WeatherClient{
 
         try {
             weatherForecast = callGetMethod(String.class,"forecast",cityName,countryCode,Config.API_KEY);
+            System.out.println("callGetMethod::: " + weatherForecast);
             JsonNode jsonNode = objectMapper.readTree(weatherForecast);
             Iterator<JsonNode> forecastNodeIterator = jsonNode.get("list").iterator();
 
