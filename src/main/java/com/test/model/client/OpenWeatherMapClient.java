@@ -38,14 +38,26 @@ public class OpenWeatherMapClient implements WeatherClient{
         hourAndMinutes = LocalDateTime.now().format(timeFormat);
 
         try {
-            weatherNow = callGetMethod(String.class,"weather",cityName,countryCode,Config.API_KEY);
+            weatherNow = restTemplate.getForObject(WEATHER_URL + "{typeOfWeather}?q={cityName},{countryCode}&appid={apiKey}&units=metric&lang=pl",
+                    String.class, "weather",cityName,countryCode,Config.API_KEY);
+            if (weatherNow == null) {
+                throw new NullPointerException("No weather found for this city");
+            }
             JsonNode jsonNode = objectMapper.readTree(weatherNow);
             descriptionWeather = jsonNode.get("weather").get(0).get("description").asText();
             iconWeatherCode = jsonNode.get("weather").get(0).get("icon").asText();
             temperature = jsonNode.get("main").get("temp").asDouble();
             feelsLikeTemperature = jsonNode.get("main").get("feels_like").asDouble();
+            System.out.println(temperature);
+            System.out.println(hourAndMinutes);
+            System.out.println(iconWeatherCode);
+            System.out.println(iconWeatherCode);
+            System.out.println(descriptionWeather);
+            System.out.println(feelsLikeTemperature);
+            System.out.println(cityName);
         } catch (IOException e) {
             e.printStackTrace();
+            throw new NullPointerException("No weather found for this city");
         }
         return new Weather(temperature, hourAndMinutes, iconWeatherCode, descriptionWeather, feelsLikeTemperature,cityName);
     }
@@ -91,7 +103,7 @@ public class OpenWeatherMapClient implements WeatherClient{
 
         try {
             weatherForecast = callGetMethod(String.class,"forecast",cityName,countryCode,Config.API_KEY);
-            System.out.println("callGetMethod::: " + weatherForecast);
+
             JsonNode jsonNode = objectMapper.readTree(weatherForecast);
             Iterator<JsonNode> forecastNodeIterator = jsonNode.get("list").iterator();
 
@@ -137,6 +149,13 @@ public class OpenWeatherMapClient implements WeatherClient{
     private <T> T callGetMethod (Class <T> responseType,Object...objects) {
         return restTemplate.getForObject(WEATHER_URL + "{typeOfWeather}?q={cityName},{countryCode}&appid={apiKey}&units=metric&lang=pl",
                 responseType, objects);
+//        String answer = "{\"weather\":[{\"description\":\"zachmurzenie duże\",\"icon\":\"04n\"}],\"main\":{\"temp\":2.78,\"feels_like\":-0.01}}";
+//        return answer;
+    }
+
+    public String callGetMethodString (Object...objects) {
+        return restTemplate.getForObject(WEATHER_URL + "{typeOfWeather}?q={cityName},{countryCode}&appid={apiKey}&units=metric&lang=pl",
+                String.class, objects);
     }
 
     public static String formatWithTodayYesterdayHourAndMinutes(String dateTime) {
