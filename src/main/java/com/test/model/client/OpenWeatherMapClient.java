@@ -73,7 +73,10 @@ public class OpenWeatherMapClient implements WeatherClient{
         List<Weather> forecastList = new ArrayList<>();
 
         try {
-            weatherForecast = callGetMethod(String.class,"forecast",cityName,countryCode,Config.API_KEY);
+            weatherForecast = restTemplate.getForObject(WEATHER_URL + "{typeOfWeather}?q={cityName},{countryCode}&appid={apiKey}&units=metric&lang=pl",
+                    String.class, "forecast",cityName,countryCode,Config.API_KEY);
+            //System.out.println(weatherForecast);
+            //weatherForecast = callGetMethod(String.class,"forecast",cityName,countryCode,Config.API_KEY);
             JsonNode jsonNode = objectMapper.readTree(weatherForecast);
             for (int i =0; i<8; i++) {
                 JsonNode forecastNode = jsonNode.get("list").get(i);
