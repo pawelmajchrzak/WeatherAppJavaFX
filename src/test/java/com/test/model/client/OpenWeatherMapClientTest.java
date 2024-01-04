@@ -6,22 +6,23 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 public class OpenWeatherMapClientTest{
 
     String cityName = "Gdańsk";
     String countryCode = "PL";
-    String WEATHER_URL = "https://api.openweathermap.org/data/2.5/";
-
     private OpenWeatherMapClient weatherClient;
     private ObjectMapper objectMapper = new ObjectMapper();
     @Mock
@@ -37,8 +38,7 @@ public class OpenWeatherMapClientTest{
     void shouldReturnWeather() {
         //given
         String preparedAnswer = "{\"weather\":[{\"description\":\"zachmurzenie duże\",\"icon\":\"04n\"}],\"main\":{\"temp\":2.78,\"feels_like\":-0.01}}";
-        when(restTemplate.getForObject(WEATHER_URL + "{typeOfWeather}?q={cityName},{countryCode}&appid={apiKey}&units=metric&lang=pl",
-                String.class, "weather",cityName,countryCode,Config.API_KEY))
+        when(restTemplate.getForObject(anyString(),eq(String.class), eq("weather"),eq(cityName),eq(countryCode),anyString()))
                 .thenReturn(preparedAnswer);
         //when
         Weather result = weatherClient.getWeather("Gdańsk","Polska");
@@ -51,11 +51,55 @@ public class OpenWeatherMapClientTest{
     }
 
     @Test
+    void shouldNotReturnWeather() {
+        //given
+        when(restTemplate.getForObject(anyString(),eq(String.class), eq("weather"),eq(cityName),eq(countryCode),anyString()))
+                .thenThrow(new RestClientException("Simulated RestClientException"));
+        //when
+        Weather result = weatherClient.getWeather("Gdańsk","Polska");
+        //then
+        assertThat(result).isNull();
+    }
+
+    @Test
+    void shouldReturnTrueForValidCityAndCountry() {
+        // given
+        String preparedAnswer = "{\"weather\":[{\"description\":\"zachmurzenie duże\",\"icon\":\"04n\"}],\"main\":{\"temp\":2.78,\"feels_like\":-0.01}}";
+        when(restTemplate.getForObject(anyString(),eq(String.class), eq("weather"),eq(cityName),eq(countryCode),anyString()))
+                .thenReturn(preparedAnswer);
+        // when
+        boolean result = weatherClient.isCityAndCountryValid("Gdańsk","Polska");
+        // then
+        assertTrue(result);
+    }
+    @Test
+    void shouldReturnFalseForValidCityAndCountry() {
+        // given
+        when(restTemplate.getForObject(anyString(),eq(String.class), eq("weather"),eq(cityName),eq(countryCode),anyString()))
+                .thenThrow(new RestClientException("Simulated RestClientException"));
+        // when
+        boolean result = weatherClient.isCityAndCountryValid("Gdańsk","Polska");
+        // then
+        assertFalse(result);
+    }
+
+//    @Test
+//    void shouldThrowExceptionWhenNoWeatherFound() throws IOException {
+//        //given
+//        String preparedAnswer = "{\"weather\":[{\"description\":\"zachmurzenie duże\",\"icon\":\"04n\"}],\"main\":{\"temp\":2.78,\"feels_like\":-0.01}}";
+//        when(restTemplate.getForObject(anyString(),eq(String.class), eq("weather"),eq("Gdańskxxx"),anyString(),anyString()))
+//                .thenReturn(preparedAnswer);
+//        //when and then
+//        assertThatThrownBy(() -> weatherClient.getWeather(cityName, "Polska"))
+//                .isInstanceOf(IllegalArgumentException.class)
+//                .hasMessage("argument \"content\" is null");
+//    }
+
+    @Test
     void shouldReturnForecastHourly() {
         //given
         String preparedAnswer = createForecast();
-        when(restTemplate.getForObject(WEATHER_URL + "{typeOfWeather}?q={cityName},{countryCode}&appid={apiKey}&units=metric&lang=pl",
-                String.class, "forecast",cityName,countryCode,Config.API_KEY))
+        when(restTemplate.getForObject(anyString(),eq(String.class), eq("forecast"),eq(cityName),eq(countryCode),anyString()))
                 .thenReturn(preparedAnswer);
         //when
         List<Weather> result = weatherClient.getForecastHourly("Gdańsk", "Polska");
@@ -72,6 +116,17 @@ public class OpenWeatherMapClientTest{
     }
 
     @Test
+    void shouldNotReturnForecastHourly() {
+        //given
+        when(restTemplate.getForObject(anyString(),eq(String.class), eq("forecast"),eq(cityName),eq(countryCode),anyString()))
+                .thenThrow(new RestClientException("Simulated RestClientException"));
+        //when
+        List<Weather> result = weatherClient.getForecastHourly("Gdańsk", "Polska");
+        //then
+        assertThat(result).isNull();
+    }
+
+    @Test
     void shouldReturnForecastDaily() {
         //given
         OpenWeatherMapClient weatherClientDaily = new OpenWeatherMapClient(restTemplate, objectMapper);
@@ -83,7 +138,7 @@ public class OpenWeatherMapClientTest{
                 .generateFormattedDates(4);
         doReturn(preparedAnswer)
                 .when(weatherClientSpy)
-                .callGetMethodString("forecast",cityName,countryCode,Config.API_KEY);
+                .callGetMethodString(eq("forecast"),eq(cityName),eq(countryCode),anyString());
 
         //when
         List<Weather> result = weatherClientSpy.getForecastDaily("Gdańsk", "Polska");
@@ -96,18 +151,18 @@ public class OpenWeatherMapClientTest{
         assertThat(result.get(2).getTemperatureNight()).isEqualTo(3.0);
     }
 
-    @Test
-    void shouldThrowExceptionWhenWeatherNotAvailable() {
-        //given
-        when(restTemplate.getForObject(WEATHER_URL + "{typeOfWeather}?q={cityName},{countryCode}&appid={apiKey}&units=metric&lang=pl",
-                String.class, "weather", cityName, countryCode, Config.API_KEY))
-                .thenReturn(null);
 
-        //when, then
-        assertThrows(RuntimeException.class, () -> {
-            weatherClient.getWeather("Gdańsk", "Polska");
-        });
-    }
+//    @Test
+//    void shouldThrowExceptionWhenWeatherNotAvailable() {
+//        //given
+//        when(restTemplate.getForObject(anyString(),eq(String.class), eq("forecast"),eq(cityName),eq(countryCode),anyString()))
+//                .thenReturn(null);
+//
+//        //when, then
+//        assertThrows(RuntimeException.class, () -> {
+//            weatherClient.getWeather("Gdańsk", "Polska");
+//        });
+//    }
 
     @Test
     void shouldReturnNextFourDays() {

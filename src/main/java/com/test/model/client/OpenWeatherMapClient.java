@@ -4,7 +4,6 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.test.model.Weather;
 import org.springframework.web.client.RestTemplate;
-import java.io.IOException;
 import java.time.DayOfWeek;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -45,9 +44,9 @@ public class OpenWeatherMapClient implements WeatherClient{
             iconWeatherCode = jsonNode.get("weather").get(0).get("icon").asText();
             temperature = jsonNode.get("main").get("temp").asDouble();
             feelsLikeTemperature = jsonNode.get("main").get("feels_like").asDouble();
-        } catch (IOException e) {
-            e.printStackTrace();
-            throw new NullPointerException("No weather found for this city");
+        } catch (Exception e) {
+            //e.printStackTrace();
+            return null;
         }
         return new Weather(temperature, hourAndMinutes, iconWeatherCode, descriptionWeather, feelsLikeTemperature,cityName);
     }
@@ -74,8 +73,9 @@ public class OpenWeatherMapClient implements WeatherClient{
                 forecastDateTime = formatWithTodayYesterdayHourAndMinutes(forecastNode.get("dt_txt").asText());
                 forecastList.add(new Weather(temperature, forecastDateTime, iconWeatherCode, probabilityRain));
             }
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+            //e.printStackTrace();
+            return null;
         }
         return forecastList;
     }
@@ -112,8 +112,9 @@ public class OpenWeatherMapClient implements WeatherClient{
                     forecastList.add(new Weather(temperature, temperatureNight, polishDayOfWeekName, iconWeatherCode));
                 }
             }
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+            //e.printStackTrace();
+            return null;
         }
         return forecastList;
     }
@@ -122,10 +123,11 @@ public class OpenWeatherMapClient implements WeatherClient{
     public boolean isCityAndCountryValid(String cityName, String countryName) {
         String countryCode = getCountryCode(countryName);
         try {
-            String responseBody = callGetMethodString("weather", cityName, countryCode, Config.API_KEY);
+            String responseBody = restTemplate.getForObject(WEATHER_URL + "{typeOfWeather}?q={cityName},{countryCode}&appid={apiKey}&units=metric&lang=pl",
+                    String.class, "weather",cityName,countryCode,Config.API_KEY);;
             return true;
         } catch (Exception e) {
-            e.printStackTrace();
+            //e.printStackTrace();
             return false;
         }
     }
